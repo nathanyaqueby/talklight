@@ -1,0 +1,15 @@
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# editors
+.vscode/
+.idea/
+*.swp
+
+# build / tooling output
+_site/
+node_modules/
+__pycache__/
+*.pyc
+*.log
