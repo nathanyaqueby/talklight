@@ -367,6 +367,11 @@ const DE = {
   "Training session": "Schulung",
   "1:1": "1:1",
   "Department meeting": "Abteilungsbesprechung",
+  "Microphone access is blocked. Allow it in your browser's site settings (lock icon), then try again. The demo still works.": "Der Mikrofonzugriff ist blockiert. Erlaube ihn in den Website-Einstellungen deines Browsers (Schloss-Symbol) und versuche es erneut. Die Demo funktioniert trotzdem.",
+  "No microphone was found on this device. The demo still works.": "Auf diesem Gerät wurde kein Mikrofon gefunden. Die Demo funktioniert trotzdem.",
+  "The microphone is in use by another app. The demo still works.": "Das Mikrofon wird von einer anderen App verwendet. Die Demo funktioniert trotzdem.",
+  "Tap the blue “Simulate my workday” button to speed through a teaching day.": "Tippe auf den blauen Button „Meinen Arbeitstag simulieren“, um einen Arbeitstag im Zeitraffer zu erleben.",
+  "Go to Live": "Zu Live",
   "Deutsch": "Deutsch"
 };
 

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#DCEBFB">
 <meta name="color-scheme" content="light">
 <meta name="description" content="TalkLight: a voice wellbeing companion for people who talk for a living. Pause your voice, not your ideas.">
@@ -187,6 +187,12 @@
               <p class="who-name" id="whoName">Teacher</p>
               <p class="role-line" id="roleLine"></p>
             </div>
+            <svg class="wave" id="wave" viewBox="0 0 70 40" preserveAspectRatio="xMaxYMid meet" aria-hidden="true">
+            <rect x="3" y="14" width="6" height="12" rx="3"/><rect x="13" y="9" width="6" height="22" rx="3"/>
+            <rect x="23" y="4" width="6" height="32" rx="3"/><rect x="33" y="1" width="6" height="38" rx="3"/>
+            <rect x="43" y="4" width="6" height="32" rx="3"/><rect x="53" y="9" width="6" height="22" rx="3"/>
+            <rect x="63" y="14" width="6" height="12" rx="3"/>
+          </svg>
           </div>
           <div class="ring">
             <svg viewBox="0 0 132 132" aria-hidden="true">
@@ -201,15 +207,13 @@
           </div>
           <p class="state-pill"><i></i><span id="stateText">Healthy range</span></p>
           <p class="cal-badge" id="calBadge" hidden><svg aria-hidden="true"><use href="#i-check"/></svg>Calibrated to your voice</p>
-          <svg class="wave" id="wave" viewBox="0 0 70 40" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
-            <rect x="3" y="14" width="6" height="12" rx="3"/><rect x="13" y="9" width="6" height="22" rx="3"/>
-            <rect x="23" y="4" width="6" height="32" rx="3"/><rect x="33" y="1" width="6" height="38" rx="3"/>
-            <rect x="43" y="4" width="6" height="32" rx="3"/><rect x="53" y="9" width="6" height="22" rx="3"/>
-            <rect x="63" y="14" width="6" height="12" rx="3"/>
-          </svg>
+          <div class="cta-row">
+            <button class="btn btn-primary btn-grow" id="startBtn" type="button">Simulate my workday</button>
+            <button class="btn btn-ghost" id="resetBtn" type="button">Reset</button>
+          </div>
           <div class="kpis">
             <div class="kpi"><svg aria-hidden="true"><use href="#i-clock"/></svg><b id="timer">00:00</b><span>Speaking today</span></div>
-            <div class="kpi"><svg aria-hidden="true"><use href="#i-pausebars"/></svg><b id="kBreaks">0</b><span>Breaks</span></div>
+            <div class="kpi"><i class="cup-ic" aria-hidden="true"></i><b id="kBreaks">0</b><span>Breaks</span></div>
             <div class="kpi"><svg aria-hidden="true"><use href="#i-drop"/></svg><b id="kWater">0/8</b><span>Water</span></div>
           </div>
         </div>
@@ -221,10 +225,6 @@
         </div>
         <p class="muted small">Population figures from research, not your personal risk.</p>
 
-        <div class="row">
-          <button class="btn btn-primary btn-grow" id="startBtn" type="button">Simulate my workday</button>
-          <button class="btn btn-ghost" id="resetBtn" type="button">Reset</button>
-        </div>
         <button class="toggle" id="micToggle" type="button" role="switch" aria-checked="false">
           <span class="toggle-ic"><svg aria-hidden="true"><use href="#i-mic"/></svg></span>
           <span class="toggle-text"><span class="toggle-title">Use my voice (on-device)</span><span class="muted">Reads volume only. Never records.</span></span>

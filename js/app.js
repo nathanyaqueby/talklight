@@ -67,6 +67,16 @@ const MIC_MIN_THRESHOLD = 0.01;
 const MIC_HOLD_MS = 300;                      // > 300 ms above = speaking, > 300 ms below = pause
 const MIC_DECAY = 0.85;                       // level holds through short gaps between syllables
 const MIC_FAIL = "Mic unavailable, using demo mode.";
+const MIC_BLOCKED = "Microphone access is blocked. Allow it in your browser's site settings (lock icon), then try again. The demo still works.";
+const MIC_NONE = "No microphone was found on this device. The demo still works.";
+const MIC_BUSY = "The microphone is in use by another app. The demo still works.";
+function micErrorText(e) {
+  const n = e && e.name;
+  if (n === "NotAllowedError" || n === "SecurityError") return MIC_BLOCKED;
+  if (n === "NotFoundError" || n === "OverconstrainedError") return MIC_NONE;
+  if (n === "NotReadableError" || n === "AbortError") return MIC_BUSY;
+  return MIC_FAIL;
+}
 const MIC_TEXT = { asking:"Waiting for mic permission…", calibrating:"Measuring room noise…", listening:"Listening · on-device" };
 
 // ---- Voice check (baseline) ----
@@ -107,7 +117,7 @@ const WATCH_TEXT  = { calm:"All good", warning:"Voice rest soon", rest:"2-min vo
 // ---- Guided demo ----
 const COACH_TEXT = [
   "",
-  "Tap “Simulate my workday” to speed through a teaching day.",
+  "Tap the blue “Simulate my workday” button to speed through a teaching day.",
   "Watch your voice load rise. At 80% you get a silent reminder.",
   "That was the silent reminder. Now tap “Take break”.",
   "Break done. See how your week compares to your baseline.",
@@ -473,7 +483,7 @@ function setQuiet(on) {
 function renderQuiet() {
   ["quietToggle", "setQuiet"].forEach((id) => $(id).setAttribute("aria-checked", String(state.quiet)));
   const note = state.quiet ? t("Lecture mode is on. Reminders are held until you switch it off. Your load is still tracked.")
-             : calQuiet ? t("Lecture mode is on automatically during “{title}”. Reminders are held until it ends.", { title:calTitle })
+             : calQuiet ? t("Lecture mode is on automatically during “{title}”. Reminders are held until it ends.", { title:evTitle(calTitle) })
              : "";
   if ($("quietNote").textContent !== note) $("quietNote").textContent = note;
   $("quietNote").hidden = !note;
@@ -557,12 +567,18 @@ async function openMic() {
   ctx.resume().catch(() => {});
   let stream;
   try {
-    stream = await md.getUserMedia({ audio:{ echoCancellation:false, noiseSuppression:false, autoGainControl:false } });
-    await ctx.resume();
+    try {
+      stream = await md.getUserMedia({ audio:{ echoCancellation:false, noiseSuppression:false, autoGainControl:false } });
+    } catch (e) {
+      // some phones reject the raw-audio constraints: retry plainly, but never retry a permission refusal
+      if (e && (e.name === "NotAllowedError" || e.name === "SecurityError" || e.name === "NotFoundError")) throw e;
+      stream = await md.getUserMedia({ audio:true });
+    }
   } catch (e) {                                  // denied, no mic, or blocked by the browser
     ctx.close().catch(() => {});
     throw e;
   }
+  try { await Promise.race([ctx.resume(), new Promise((r) => setTimeout(r, 800))]); } catch (e) { /* not fatal, micSample retries */ }
   const analyser = ctx.createAnalyser();
   analyser.fftSize = 1024;
   const mute = ctx.createGain();                 // gain 0: Safari only processes nodes that reach the output,
@@ -593,7 +609,7 @@ async function micStart() {
   pauseDemo();                                   // the mic replaces the demo pattern
   let m;
   try { m = await openMic(); }
-  catch (e) { if (token === micToken) micStop(MIC_FAIL); return; }
+  catch (e) { console.warn("mic:", e && e.name, e && e.message); if (token === micToken) micStop(micErrorText(e)); return; }
   if (token !== micToken) { m.close(); return; } // switched off while the permission prompt was open
   mic = m;
   mic.lastAt = performance.now();
@@ -698,7 +714,7 @@ async function startVoiceCheck() {
   let m;
   try { m = await openMic(); }
   catch (e) {
-    if (vc === run) { vc = null; vcSet("fail", t("The mic isn’t available here. You can skip this and use the sample baseline."), "Try again"); }
+    if (vc === run) { vc = null; vcSet("fail", t(micErrorText(e)), "Try again"); }
     return;
   }
   if (vc !== run) { m.close(); return; }          // cancelled while the permission prompt was open
@@ -753,7 +769,6 @@ function renderChart() {
          `<text x="${L - 6}" y="${B + 4}" text-anchor="end">0</text>` +
          `<polygon class="area" points="${x(0)},${B} ${pts} ${x(days.length - 1)},${B}"/>` +
          `<line class="base" x1="${L}" y1="${baseY}" x2="${R}" y2="${baseY}"/>` +
-         `<text x="${L + 6}" y="${baseY - 6}">${t("Your baseline")}</text>` +
          `<polyline class="line" points="${pts}"/>`;
   days.forEach((d, i) => {
     const hot = d.today && d.min > profile.baselineMin;
@@ -784,13 +799,15 @@ function renderInsight(days, baselineMin) {
 /* ================= GUIDED DEMO ================= */
 function coachGo(n) { if (n > coachStep) { coachStep = n; renderCoach(); } }
 function renderCoach() {
+  $("startBtn").classList.toggle("cta-hint", coachStep === 1 && !coachHidden && !introOpen && !state.running && state.dayMin === 0);
   const show = !coachHidden && !introOpen;
   $("coach").hidden = !show;
   if (!show) return;
   $("coachStep").textContent = coachStep >= 5 ? t("Done") : coachStep + "/4";
   $("coachText").textContent = t(COACH_TEXT[coachStep]);
-  $("coachAct").hidden = coachStep < 5;
-  $("coachAct").textContent = t("Summary");
+  const toLive = coachStep === 1 && currentTab !== "live";
+  $("coachAct").hidden = !(coachStep >= 5 || toLive);
+  $("coachAct").textContent = t(toLive ? "Go to Live" : "Summary");
 }
 
 /* ================= ROUTER ================= */
@@ -804,6 +821,7 @@ function showTab(name) {
   $("main").scrollTop = 0;
   if (name === "week") { renderChart(); if (coachStep >= 4) coachGo(5); }
   if (name === "plan") renderPlan();
+  renderCoach();
 }
 
 function setRole(role) {
@@ -1003,7 +1021,7 @@ $("resetData").addEventListener("click", () => {
 $("baselineBtn").addEventListener("click", () => openIntro(true));
 $("summaryBtn").addEventListener("click", openSummary);
 $("coachX").addEventListener("click", () => { coachHidden = true; renderCoach(); });
-$("coachAct").addEventListener("click", openSummary);
+$("coachAct").addEventListener("click", () => (coachStep >= 5 ? openSummary() : showTab("live")));
 $("replayBtn").addEventListener("click", () => { closeSheets(true); resetSession(); showTab("live"); coachHidden = false; render(); });
 $("shareBtn").addEventListener("click", () => {
   const url = location.href.split("#")[0].split("?")[0];

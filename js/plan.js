@@ -12,6 +12,12 @@ let events = [];                    // { id, title, start, end } (minutes since 
 let evId = 1;
 let calQuiet = false, calTitle = "";
 
+// Built-in events are stored in English and translated when shown, so switching language later also switches them.
+function evTitle(s) {
+  const m = /^Lesson (\d+)$/.exec(s);
+  return m ? t("Lesson {n}", { n: m[1] }) : t(s);
+}
+
 function hm(min) { return pad2(Math.floor(min / 60)) + ":" + pad2(min % 60); }
 function parseHM(s) { const m = /^(\d{1,2}):(\d{2})$/.exec(s || ""); return m ? +m[1] * 60 + +m[2] : null; }
 function nowMin() { const d = new Date(); return d.getHours() * 60 + d.getMinutes(); }
@@ -22,12 +28,12 @@ function sampleEvents(role) {
   const out = [];
   const add = (title, h, m, len) => out.push({ title, start: h * 60 + m, end: h * 60 + m + len });
   if (role === "lecturer") {
-    add(t("Lecture"), 9, 0, 90); add(t("Seminar"), 10, 45, 45); add(t("Workshop"), 13, 0, 90); add(t("Office hours"), 15, 0, 30);
+    add("Lecture", 9, 0, 90); add("Seminar", 10, 45, 45); add("Workshop", 13, 0, 90); add("Office hours", 15, 0, 30);
   } else if (role === "callcentre") {
-    add(t("Call block"), 8, 0, 105); add(t("Call block"), 10, 0, 105); add(t("Call block"), 12, 30, 105); add(t("Team meeting"), 14, 30, 30);
+    add("Call block", 8, 0, 105); add("Call block", 10, 0, 105); add("Call block", 12, 30, 105); add("Team meeting", 14, 30, 30);
   } else {
-    add(t("Lesson {n}", { n: 1 }), 8, 0, 45); add(t("Lesson {n}", { n: 2 }), 8, 55, 45);
-    add(t("Lesson {n}", { n: 3 }), 10, 0, 45); add(t("Lesson {n}", { n: 4 }), 10, 55, 45); add(t("Parents' evening"), 17, 0, 60);
+    add("Lesson 1", 8, 0, 45); add("Lesson 2", 8, 55, 45);
+    add("Lesson 3", 10, 0, 45); add("Lesson 4", 10, 55, 45); add("Parents' evening", 17, 0, 60);
   }
   return out;
 }
@@ -58,10 +64,10 @@ function renderPlan() {
     const li = document.createElement("li");
     li.className = "event" + (cur && cur.id === ev.id ? " now" : "");
     const time = document.createElement("span"); time.className = "ev-time"; time.textContent = hm(ev.start) + "–" + hm(ev.end);
-    const title = document.createElement("span"); title.className = "ev-title"; title.textContent = ev.title;
+    const title = document.createElement("span"); title.className = "ev-title"; title.textContent = evTitle(ev.title);
     const del = document.createElement("button");
     del.type = "button"; del.className = "ev-del"; del.dataset.id = ev.id;
-    del.setAttribute("aria-label", t("Delete {title}", { title: ev.title }));
+    del.setAttribute("aria-label", t("Delete {title}", { title: evTitle(ev.title) }));
     del.innerHTML = '<svg aria-hidden="true"><use href="#i-close"/></svg>';
     li.append(time, title, del);
     ul.append(li);
@@ -81,8 +87,8 @@ function renderNow() {
   const n = nowMin(), cur = currentEvent();
   const next = sortedEvents().find((e) => e.start > n);
   let text;
-  if (cur) text = t("Now: {title} until {end}", { title: cur.title, end: hm(cur.end) });
-  else if (next) text = t("Next: {title} at {start}", { title: next.title, start: hm(next.start) });
+  if (cur) text = t("Now: {title} until {end}", { title: evTitle(cur.title), end: hm(cur.end) });
+  else if (next) text = t("Next: {title} at {start}", { title: evTitle(next.title), start: hm(next.start) });
   else text = events.length ? t("All events are done for today.") : t("Nothing planned right now.");
   $("nowText").textContent = text;
   $("nowCard").classList.toggle("live", !!cur);
@@ -105,7 +111,7 @@ function persistEvents() { saveStore(); renderPlan(); updateCalQuiet(); }
 
 function addEvent(title, start, len) {
   const end = start + len;
-  events.push({ id: evId++, title: title || t("Meeting"), start, end });
+  events.push({ id: evId++, title: title || "Meeting", start, end });
   persistEvents();
 }
 
@@ -134,7 +140,7 @@ function saveEventFromForm() {
 function demoMeeting() {
   if (events.length >= MAX_EVENTS) return;
   const s = Math.min(nowMin(), 24 * 60 - DEMO_MEETING_MIN - 1);
-  addEvent(t("Quick meeting"), s, DEMO_MEETING_MIN);
+  addEvent("Quick meeting", s, DEMO_MEETING_MIN);
 }
 
 /* ---------- Calendar sources (demo data + .ics import/export) ---------- */
@@ -159,7 +165,7 @@ function calNote(msg) {
 }
 
 function mockDay(kind) {
-  const e = (title, h1, m1, h2, m2) => ({ title: t(title), start: h1 * 60 + m1, end: h2 * 60 + m2 });
+  const e = (title, h1, m1, h2, m2) => ({ title, start: h1 * 60 + m1, end: h2 * 60 + m2 });
   if (kind === "classes") {
     return [e("Entrepreneurship lecture", 9, 0, 10, 30), e("Business Model Canvas workshop", 10, 45, 12, 15),
             e("Pitch practice", 13, 30, 14, 15), e("Team meeting: TalkLight", 14, 30, 15, 30), e("Mentor call", 16, 0, 16, 30)];
@@ -225,7 +231,7 @@ function importICS(text, fileName) {
   if (!days.length) { calNote({ k: repeating ? "Only repeating events were found, and this prototype does not expand them." : "No events with a start time were found in this file." }); return; }
   const day = days.includes(todayKey) ? todayKey : days[0];
   const picked = list.filter((x) => key(x.start) === day).map((x) => ({
-    title: (x.title || t("Meeting")).slice(0, 40),
+    title: (x.title || "Meeting").slice(0, 40),
     start: x.start.getHours() * 60 + x.start.getMinutes(),
     end: key(x.end) === day ? x.end.getHours() * 60 + x.end.getMinutes() : 23 * 60 + 59
   })).filter((x) => x.end > x.start && x.end < 24 * 60).sort((a, b) => a.start - b.start);
