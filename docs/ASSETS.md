@@ -17,6 +17,10 @@ All optional. Drop files at the exact paths below and reload. **SVG is always be
 `img/team/lara-hedenig.jpg`, `hannah-raunig.jpg`, `negin-shahrokhi.jpg`, `zara-khan.jpg`, `nathanya-satriani.jpg`
 Square JPG, 400×400 px, face centred, under 60 KB each. Shown as 48 px circles.
 
+## Wanted: calendar app logos (optional)
+
+`img/cal/google.svg`, `img/cal/outlook.svg`, `img/cal/apple.svg`: SVG (PNG 128×128 transparent is fine, then change the extension in `index.html`), square, official full-colour logo. Shown 26 px inside the Plan > Connect a calendar sheet. Until added, a letter badge is shown. Check each provider's brand guidelines before publishing.
+
 ## Wanted: illustrations that would lift the look most
 
 Style: flat vector, rounded shapes, no outlines, in the palette below, same family as the poster's role icons (people with a soft pastel background circle). Transparent background.

@@ -15,32 +15,29 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  check:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - name: JavaScript syntax check
         run: |
           for f in js/*.js sw.js; do node --check "$f"; done
-      - name: Manifest is valid JSON
-        run: node -e "JSON.parse(require('fs').readFileSync('manifest.webmanifest','utf8'))"
+          node -e "JSON.parse(require('fs').readFileSync('manifest.webmanifest','utf8'))"
+      - name: Assemble the site (only what the app needs)
+        run: |
+          mkdir _site
+          cp -r index.html sw.js manifest.webmanifest css js fonts img vendor _site/
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
 
   deploy:
-    needs: check
+    needs: build
     runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - uses: actions/checkout@v4
-      - name: Assemble the site (only what the app needs)
-        run: |
-          mkdir _site
-          cp -r index.html sw.js manifest.webmanifest css js fonts img vendor _site/
-          touch _site/.nojekyll
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: _site
       - id: deployment
         uses: actions/deploy-pages@v4
