@@ -7,13 +7,13 @@ This repository is the **clickable web prototype**: visitors scan the poster QR 
 
 It tracks speaking **time and loudness only, never words**, estimates a "voice load" against a personal limit, and gives a silent reminder (screen glow, vibration, optional watch notification) before the voice gets tired.
 
-A student project of the Entrepreneurship course at Carinthia University of Applied Sciences (CUAS). Contact: LaraKatharina.Hedenig@edu.fh-kaernten.ac.at
+A student project of the Entrepreneurship course at Carinthia University of Applied Sciences (CUAS).
 
 ## The demo flow
 
 1. **Intro** (first visit): Monitor → Nudge → Rest, then pick a role and optionally run a 10-second *voice check*.
 2. **Live**: tap *Simulate my workday*. A coach bar guides 4 steps: start → water nudge at 45% → silent reminder at 80% → *Take break* (guided breathing screen) → *Week* → summary.
-3. **Summary**: peak load, breaks, water, "Would you use TalkLight?" and a **Contact us** button (opens the visitor's email app; nothing is sent from the page).
+3. **Summary**: peak load, breaks, water, "Would you use TalkLight?" and a **Contact us** button (opens a pre-filled GitHub issue, or an email if `CONTACT_EMAIL` is set; nothing is sent from the page).
 
 Other screens: **Limit** (load meter, water tracker, guided 2-minute voice rest, voice baseline, tips) · **Alerts** (watch preview, snooze, Lecture mode, watch notifications, Band teaser) · **Plan** (personal day, smart break windows, auto Lecture mode) · **Week** (trend vs baseline, schools & employers card, sample team view) · **Settings** (vibration, water nudges, language, About & team, privacy).
 Language: English and German (auto-detected, switch with the flag buttons).
@@ -38,7 +38,8 @@ Teacher, Lecturer and Call-centre differ in: personal limit and typical baseline
 | `fonts/` | Open Sauce Sans (SIL OFL), self-hosted. |
 | `img/` | Logos and app icons. Optional team photos go in `img/team/`, see `docs/ASSETS.md`. |
 | `vendor/qrcode.js` | MIT-licensed QR generator (desktop side panel only). |
-| `tools/build_logo.py` | Generates placeholder logo/icon SVGs. Never overwrites existing files unless `--force`. |
+| `tools/build_icons.py` | Builds `cup.svg`, `icon.svg`, `icon-maskable.svg` from the official `img/cup-white.svg`. PNG icons are screenshots of those SVGs. |
+| `tools/og.html` | Source of `img/og-image.png`. |
 | `_headers` | Cache and security headers for Netlify / Cloudflare Pages (ignored elsewhere). |
 | `.github/workflows/pages.yml` | Checks the JS and deploys to GitHub Pages on every push to `main`. |
 
@@ -68,7 +69,7 @@ The URL behind the printed QR code must never change. Use a stable address (cust
 - Set a repository-local git identity (`git config user.name` / `user.email`) so personal or work addresses don't end up in the history.
 - Add a `LICENSE` file if the team wants others to reuse the code. Until then, all rights are reserved. Fonts and the QR library keep their own licences, see `THIRD_PARTY_NOTICES.md`.
 - Add the team photos in `img/team/` (see `docs/ASSETS.md`). Without them the About page shows initials. `img/og-image.png` is built from `tools/og.html`; its `og:image` URL in `index.html` points at the GitHub Pages address, update it if the site moves.
-- The contact address is `CONTACT_EMAIL` at the top of `js/app.js`.
+- `CONTACT_EMAIL` at the top of `js/app.js` is empty on purpose (no personal address in a public repo). While empty, "Contact us" opens a pre-filled issue on the GitHub repo. Put a shared team address there if you want email instead.
 
 ## Brand
 
@@ -77,7 +78,7 @@ Gradient `#0F64B7 → #64AAF2`, ink `#0B1B2B`, white and cool greys. Open Sauce 
 ## Rules to keep (design constraints)
 
 1. Static files only. No framework, no build step. The page makes no external requests.
-2. Nothing leaves the device. No backend, no login, no analytics. Only role, language, baseline level, switches and calendar entries are kept in `localStorage` (wrapped in try/catch) and can be deleted in Settings. "Contact us" is a plain `mailto:` link.
+2. Nothing leaves the device. No backend, no login, no analytics. Only role, language, baseline level, switches and calendar entries are kept in `localStorage` (wrapped in try/catch) and can be deleted in Settings. "Contact us" is a plain link (GitHub issue or `mailto:`).
 3. Never record audio. The mic code only reads a volume number (RMS) from an `AnalyserNode`.
 4. No medical claims: say "voice wellbeing", "voice load", "voice strain", never "diagnose", "treat" or "cure".
 5. The simulated workday is deterministic: no `Math.random()`, so every run behaves the same on stage.

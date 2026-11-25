@@ -123,12 +123,15 @@
   <symbol id="i-pausebars" viewBox="0 0 24 24"><g fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="2"/><rect x="14" y="5" width="4" height="14" rx="2"/></g></symbol>
   <symbol id="f-gb" viewBox="0 0 60 40"><clipPath id="gbc"><rect width="60" height="40" rx="6"/></clipPath><g clip-path="url(#gbc)"><rect width="60" height="40" fill="#012169"/><path d="M0 0l60 40M60 0L0 40" stroke="#fff" stroke-width="8"/><path d="M0 0l60 40M60 0L0 40" stroke="#C8102E" stroke-width="3"/><path d="M30 0v40M0 20h60" stroke="#fff" stroke-width="12"/><path d="M30 0v40M0 20h60" stroke="#C8102E" stroke-width="7"/></g></symbol>
   <symbol id="f-de" viewBox="0 0 60 40"><clipPath id="dec"><rect width="60" height="40" rx="6"/></clipPath><g clip-path="url(#dec)"><rect width="60" height="14" fill="#000"/><rect y="13" width="60" height="14" fill="#DD0000"/><rect y="26" width="60" height="14" fill="#FFCE00"/></g></symbol>
+  <symbol id="i-code" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5M14 4l-4 16"/></g></symbol>
+  <symbol id="i-upload" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M7 9l5-5 5 5M4 15v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></g></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v12M7 11l5 5 5-5M4 15v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></g></symbol>
   <symbol id="i-gear" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M18.7 5.3l-2.1 2.1M7.4 16.6l-2.1 2.1"/></g></symbol>
   <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
   <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></symbol>
   <symbol id="i-mic" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0M12 18v3"/></g></symbol>
   <symbol id="i-drop" viewBox="0 0 24 24"><path d="M12 3C9 7.5 6 10.5 6 14.5a6 6 0 0 0 12 0C18 10.5 15 7.5 12 3z" fill="currentColor"/></symbol>
-  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z" fill="currentColor"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M8 12h8"/></g></symbol>
 </svg>
 
 <div class="stage">
@@ -142,6 +145,7 @@
       <div id="qr" class="qr" role="img" aria-label="QR code for this page"></div>
       <p><strong>Best on your phone.</strong><br>Scan to open the 60-second demo.</p>
     </div>
+    <a class="side-link" href="https://github.com/nathanyaqueby/talklight" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-code"/></svg>View on GitHub</a>
     <ul class="side-facts">
       <li>No words recorded</li><li>Nothing leaves your device</li><li>Works offline once loaded</li>
     </ul>
@@ -320,6 +324,7 @@
         <p class="muted small">Take break runs a 10-second countdown that stands in for a 2-minute voice break.</p>
 
         <div class="card band">
+          <img class="band-img" loading="lazy" data-optional src="img/band.png" alt="">
           <span class="tag tag-brand">Coming later</span>
           <h2 class="subtitle">TalkLight Band</h2>
           <p class="muted">An optional wristband with discreet vibration, so you never have to look at a screen mid-lesson. Not part of this demo.</p>
@@ -334,6 +339,12 @@
           <p class="label">Right now</p>
           <p class="now-text" id="nowText"></p>
         </div>
+        <div class="card cal-card">
+          <div class="card-head"><h2 class="subtitle">Calendar</h2></div>
+          <p class="muted" id="calSource">Not connected.</p>
+          <button class="btn btn-soft" id="calConnectBtn" type="button"><svg class="btn-ic" aria-hidden="true"><use href="#i-plan"/></svg>Connect a calendar</button>
+        </div>
+        <p class="note" id="calNote" role="status" hidden></p>
         <button class="toggle" id="autoQuietToggle" type="button" role="switch" aria-checked="true">
           <span class="toggle-ic"><svg aria-hidden="true"><use href="#i-moon"/></svg></span>
           <span class="toggle-text"><span class="toggle-title">Auto Lecture mode</span><span class="muted">Holds reminders while an event is running.</span></span>
@@ -354,6 +365,7 @@
         <div class="card soft" id="planInsightCard">
           <h2 class="subtitle">Smart break windows</h2>
           <ul class="insights" id="planInsights"></ul>
+          <button class="btn btn-ghost" id="exportBtn" type="button"><svg class="btn-ic" aria-hidden="true"><use href="#i-download"/></svg>Add break windows to my calendar</button>
         </div>
         <button class="btn btn-ghost" id="demoMeetingBtn" type="button">Try it: a meeting starts now</button>
         <p class="muted small">Your events stay on this device. TalkLight does not read your real calendar.</p>
@@ -497,6 +509,7 @@
         <button class="toggle" id="setQuiet" type="button" role="switch" aria-checked="false">
           <span class="toggle-text"><span class="toggle-title">Lecture mode</span><span class="muted">Hold reminders until you switch it off.</span></span><span class="switch" aria-hidden="true"></span>
         </button>
+        <a class="row-link" href="https://github.com/nathanyaqueby/talklight" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-code"/></svg>View source on GitHub</a>
         <button class="row-link" id="openAbout" type="button"><svg aria-hidden="true"><use href="#i-info"/></svg>About TalkLight &amp; team</button>
         <button class="row-link" id="setLang" type="button"><svg aria-hidden="true"><use href="#i-globe"/></svg><span>Language</span><b class="row-val" id="setLangVal">English</b></button>
         <button class="row-link" id="openPrivacy" type="button"><svg aria-hidden="true"><use href="#s-shield"/></svg>Privacy &amp; data</button>
@@ -534,7 +547,7 @@
           <button class="btn btn-ghost" id="shareBtn" type="button">Share</button>
           <button class="btn btn-ghost" id="replayBtn" type="button">Try again</button>
         </div>
-        <p class="muted small">The button opens your email app. Nothing is sent from this page.</p>
+        <p class="muted small">The button opens a new message (your email app or GitHub). Nothing is sent from this page.</p>
       </div>
     </div>
 
@@ -548,25 +561,41 @@
         </div>
         <p>TalkLight is a voice wellbeing companion for people who talk for a living: teachers, lecturers and call-centre agents. It tracks speaking time and loudness, never words, and gives a silent reminder before your voice gets tired.</p>
         <div class="steps3">
-          <div><b>Monitor</b><span>Speaking time and loudness</span></div>
-          <div><b>Nudge</b><span>A silent reminder</span></div>
-          <div><b>Rest</b><span>A short break and water</span></div>
+          <div><img src="img/monitor.svg" alt=""><b>Monitor</b><span>Speaking time and loudness</span></div>
+          <div><img src="img/nudge.svg" alt=""><b>Nudge</b><span>A silent reminder</span></div>
+          <div><img src="img/rest.svg" alt=""><b>Rest</b><span>A short break and water</span></div>
         </div>
         <h3 class="sec">The team</h3>
         <ul class="team">
           <li><span class="mem-av" data-ini="LH"><img loading="lazy" data-optional src="img/team/lara-hedenig.jpg" alt=""></span><div><b>Lara Hedenig</b><span>Team Leader</span></div></li>
           <li><span class="mem-av" data-ini="HR"><img loading="lazy" data-optional src="img/team/hannah-raunig.jpg" alt=""></span><div><b>Hannah Raunig</b><span>Operations Lead</span></div></li>
-          <li><span class="mem-av" data-ini="NeS"><img loading="lazy" data-optional src="img/team/negin-shahrokhi.jpg" alt=""></span><div><b>Negin Shahrokhi</b><span>Product Manager</span></div></li>
+          <li><span class="mem-av" data-ini="NS"><img loading="lazy" data-optional src="img/team/negin-shahrokhi.jpg" alt=""></span><div><b>Negin Shahrokhi</b><span>Product Manager</span></div></li>
           <li><span class="mem-av" data-ini="ZK"><img loading="lazy" data-optional src="img/team/zara-khan.jpg" alt=""></span><div><b>Zara Khan</b><span>Product Innovation &amp; Growth</span></div></li>
-          <li><span class="mem-av" data-ini="NaS"><img loading="lazy" data-optional src="img/team/nathanya-satriani.jpg" alt=""></span><div><b>Nathanya Satriani</b><span>Developer</span></div></li>
+          <li><span class="mem-av" data-ini="NS"><img loading="lazy" data-optional src="img/team/nathanya-satriani.jpg" alt=""></span><div><b>Nathanya Satriani</b><span>Developer</span></div></li>
         </ul>
         <div class="uni">
-          <img class="uni-logo" loading="lazy" data-optional src="img/cuas-logo.jpg" alt="Carinthia University of Applied Sciences">
+          <img class="uni-logo" loading="lazy" data-optional src="img/cuas-logo.png" alt="Carinthia University of Applied Sciences">
           <p>A student project of the Entrepreneurship course at Carinthia University of Applied Sciences (CUAS).</p>
         </div>
         <a class="btn btn-primary" id="contactLink3" href="#"><svg class="btn-ic" aria-hidden="true"><use href="#i-mail"/></svg>Contact us</a>
-        <p class="muted small" id="aboutMail"></p>
+        <a class="btn btn-ghost" href="https://github.com/nathanyaqueby/talklight" target="_blank" rel="noopener"><svg class="btn-ic" aria-hidden="true"><use href="#i-code"/></svg>View source on GitHub</a>
+        <p class="muted small" id="aboutMail" hidden></p>
         <p class="muted small">This prototype uses a simulated workday. Wellbeing tips only, not medical advice. Font: Open Sauce Sans (SIL OFL).</p>
+      </div>
+    </div>
+
+    <div class="sheet" id="sheet-cal" role="dialog" aria-modal="true" aria-labelledby="cl-title" hidden>
+      <div class="sheet-bg" data-close></div>
+      <div class="sheet-body">
+        <div class="sheet-head"><h2 id="cl-title">Connect a calendar</h2><button class="icon-btn" type="button" data-close aria-label="Close"><svg aria-hidden="true"><use href="#i-close"/></svg></button></div>
+        <p class="muted">Choose where your day comes from. The connections below load demo data; nothing is read from your real account.</p>
+        <button class="row-link prov" type="button" data-prov="classes"><span class="prov-ic p-cl">E</span><span class="prov-t"><b>Entrepreneurship classes</b><small>Mock timetable</small></span></button>
+        <button class="row-link prov" type="button" data-prov="google"><span class="prov-ic p-g">G</span><span class="prov-t"><b>Google Calendar</b><small>Demo account</small></span></button>
+        <button class="row-link prov" type="button" data-prov="outlook"><span class="prov-ic p-o">O</span><span class="prov-t"><b>Microsoft Outlook</b><small>Demo account</small></span></button>
+        <button class="row-link prov" type="button" data-prov="apple"><span class="prov-ic p-a">A</span><span class="prov-t"><b>Apple Calendar</b><small>Demo account</small></span></button>
+        <button class="btn btn-soft" id="icsBtn" type="button"><svg class="btn-ic" aria-hidden="true"><use href="#i-upload"/></svg>Import a calendar file (.ics)</button>
+        <input type="file" id="icsFile" accept=".ics,text/calendar" hidden>
+        <p class="muted small">A live connection needs a sign-in with your provider, which this prototype does not have. To use your real calendar, export it as .ics (Google, Outlook and Apple all can) and import it here. The file is read on your device and never uploaded.</p>
       </div>
     </div>
 

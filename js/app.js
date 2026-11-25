@@ -1,6 +1,8 @@
 "use strict";
 /* ================= CONFIG ================= */
-const CONTACT_EMAIL = "LaraKatharina.Hedenig@edu.fh-kaernten.ac.at";
+const REPO_URL = "https://github.com/nathanyaqueby/talklight";
+// Optional team address. While empty, the "Contact us" buttons open a pre-filled GitHub issue instead.
+const CONTACT_EMAIL = "";
 
 /* ================= CONSTANTS ================= */
 // Roles differ in personal limit, typical baseline, week chart, sample calendar day, avatar and tip wording.
@@ -152,7 +154,7 @@ let seen = false;                             // intro finished at least once on
 function loadStore() { try { return JSON.parse(localStorage.getItem(STORE_KEY)) || {}; } catch (e) { return {}; } }
 function saveStore() {
   try {
-    localStorage.setItem(STORE_KEY, JSON.stringify({ seen, role:state.role, lang:LANG, baseline, settings,
+    localStorage.setItem(STORE_KEY, JSON.stringify({ seen, role:state.role, lang:LANG, baseline, settings, cal:calSrc,
       events:events.map(({ title, start, end }) => ({ title, start, end })) }));
   } catch (e) { /* private mode */ }
 }
@@ -847,17 +849,25 @@ function openSummary() {
 }
 
 /* ================= CONTACT (mailto only: nothing is sent from the page) ================= */
-function mailto(subject, body) {
-  return "mailto:" + CONTACT_EMAIL + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+function contactHref(subject, body) {
+  const q = "title=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+  return CONTACT_EMAIL
+    ? "mailto:" + CONTACT_EMAIL + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body)
+    : REPO_URL + "/issues/new?" + q;
 }
 function updateMailLinks() {
-  const general = mailto(t("TalkLight: getting in touch"),
+  const general = contactHref(t("TalkLight: getting in touch"),
     t("Hi TalkLight team,\n\nI tried the demo and would like to get in touch.\n\nWould I use it: {use}\nMy role: {role}\n",
       { use:useChoice ? t(useChoice) : t("(not answered)"), role:t(PROFILES[state.role].label) }));
   ["contactLink2", "contactLink3", "contactLink4"].forEach((id) => { $(id).href = general; });
-  $("contactLink").href = mailto(t("TalkLight: enquiry from a school or team"),
+  $("contactLink").href = contactHref(t("TalkLight: enquiry from a school or team"),
     t("Hi TalkLight team,\n\nWe would like to talk about TalkLight for our school or team.\n\nOrganisation:\nNumber of people who talk for a living:\n"));
-  $("aboutMail").textContent = t("Email: {mail}", { mail:CONTACT_EMAIL });
+  ["contactLink", "contactLink2", "contactLink3", "contactLink4"].forEach((id) => {
+    if (CONTACT_EMAIL) $(id).removeAttribute("target");
+    else { $(id).target = "_blank"; $(id).rel = "noopener"; }
+  });
+  $("aboutMail").hidden = !CONTACT_EMAIL;
+  if (CONTACT_EMAIL) $("aboutMail").textContent = t("Email: {mail}", { mail:CONTACT_EMAIL });
 }
 
 /* ================= LANGUAGE ================= */
@@ -979,12 +989,14 @@ $("resetData").addEventListener("click", () => {
   clearStore();
   baseline = null;
   events = [];
+  calSrc = null;
   settings = { vibrate:true, hydration:true, autoQuiet:true };
   $("setVibrate").setAttribute("aria-checked", "true");
   $("setHydration").setAttribute("aria-checked", "true");
   closeSheets();
   renderBaseline();
   renderPlan();
+  renderCalSource();
   updateCalQuiet();
   announce(t("Your settings on this device were deleted."));
 });

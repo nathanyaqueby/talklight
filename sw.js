@@ -2,12 +2,12 @@
 //  1. caches the app so it opens instantly and works offline after the first visit
 //  2. shows alert notifications (Android Chrome needs a service worker); a paired watch can mirror them
 
-const CACHE = "talklight-v4";
+const CACHE = "talklight-v5";
 const ASSETS = [
   "./", "index.html", "css/app.css", "js/app.js", "js/i18n.js", "js/plan.js", "js/extras.js", "vendor/qrcode.js", "manifest.webmanifest",
   "fonts/open-sauce-sans-regular.woff2", "fonts/open-sauce-sans-600.woff2",
   "fonts/open-sauce-sans-700.woff2", "fonts/open-sauce-sans-800.woff2",
-  "img/logo.svg", "img/logo-white.svg", "img/icon.svg", "img/cuas-logo.jpg",
+  "img/logo.svg", "img/logo-white.svg", "img/icon.svg", "img/cuas-logo.png", "img/monitor.svg", "img/nudge.svg", "img/rest.svg", "img/band.png",
   "img/favicon-32.png", "img/icon-180.png", "img/icon-192.png"
 ];
 

@@ -342,6 +342,8 @@ main{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;o
 .about-tag{font-weight:800;color:var(--blue);font-size:17px}
 .steps3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
 .steps3 div{display:flex;flex-direction:column;gap:2px;padding:10px;border-radius:16px;background:var(--card);box-shadow:var(--shadow);font-size:13px;line-height:1.3}
+.steps3 div{align-items:flex-start}
+.steps3 img{width:44px;height:44px;margin-bottom:6px;object-fit:contain}
 .steps3 b{font-size:15px;color:var(--blue)}
 .steps3 span{color:var(--ink-2)}
 .sec{font-size:17px;font-weight:800;margin-top:4px}
@@ -389,6 +391,25 @@ main{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;o
   .side-facts{display:flex;flex-wrap:wrap;gap:8px}
   .side-facts li{padding:4px 12px;border-radius:999px;background:var(--tint);color:var(--blue);font-size:14px;font-weight:700}
 }
+
+/* ================= SPACING / EXTRAS (late overrides) ================= */
+.card>p+.btn,.card>ul+.btn,.card>.glasses+.btn,.card>.btn{display:flex;width:100%;margin-top:16px}
+.card>.card-head+p{margin-top:2px}
+.buyer>.btn{margin-top:0}
+.card.soft>.btn{margin-top:16px}
+.ill{display:grid;place-items:center;flex:none}
+.band{position:relative;overflow:hidden;min-height:170px;padding-right:132px}
+.band-img{position:absolute;right:8px;bottom:-6px;height:158px;width:auto}
+.prov{gap:12px}
+.prov-ic{display:grid;place-items:center;flex:none;width:40px;height:40px;border-radius:12px;background:var(--tint);color:var(--blue);font-weight:800;font-size:18px}
+.prov-ic.p-cl{background:var(--grad);color:#fff}
+.prov-t{display:flex;flex-direction:column;min-width:0;line-height:1.25}
+.prov-t small{font-weight:600;font-size:13px;color:var(--ink-2)}
+.side-link{display:inline-flex;align-items:center;gap:8px;align-self:flex-start;font-weight:700;color:var(--blue);text-decoration:none}
+.side-link svg{width:20px;height:20px}
+.side-link:hover{text-decoration:underline}
+.cal-card .btn{margin-top:14px}
+a.row-link{text-decoration:none;color:inherit}
 
 /* ================= REDUCED MOTION ================= */
 @media (prefers-reduced-motion:reduce){
