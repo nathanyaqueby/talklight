@@ -17,9 +17,9 @@ All optional. Drop files at the exact paths below and reload. **SVG is always be
 `img/team/lara-hedenig.jpg`, `hannah-raunig.jpg`, `negin-shahrokhi.jpg`, `zara-khan.jpg`, `nathanya-satriani.jpg`
 Square JPG, 400×400 px, face centred, under 60 KB each. Shown as 48 px circles.
 
-## Wanted: calendar app logos (optional)
+## Calendar logos (done)
 
-`img/cal/google.svg`, `img/cal/outlook.svg`, `img/cal/apple.svg`: SVG (PNG 128×128 transparent is fine, then change the extension in `index.html`), square, official full-colour logo. Shown 26 px inside the Plan > Connect a calendar sheet. Until added, a letter badge is shown. Check each provider's brand guidelines before publishing.
+`img/cal/google.webp`, `outlook.webp`, `apple.svg`, `cu_logo.svg` are shown in Plan > Connect a calendar. Square or near-square, transparent background works best; WebP is fine (all current browsers).
 
 ## Wanted: illustrations that would lift the look most
 
