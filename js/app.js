@@ -8,12 +8,11 @@ const CONTACT_EMAIL = "";
 // Roles differ in personal limit, typical baseline, week chart, sample calendar day, avatar and tip wording.
 // The demo speed is the same for every role on purpose, so every run behaves the same on stage.
 const PROFILES = {
-  teacher:    { label:"Teacher",            limitMin:240, baselineMin:190 },
-  lecturer:   { label:"Lecturer & trainer", limitMin:210, baselineMin:160 },
-  callcentre: { label:"Call-centre agent",  limitMin:300, baselineMin:260 }
+  teacher:   { label:"Teacher",             limitMin:240, baselineMin:190, history:[175, 210, 255, 190] },
+  lecturer:  { label:"University lecturer", limitMin:210, baselineMin:160, history:[140, 170, 205, 150] },
+  presenter: { label:"Trainer & presenter", limitMin:195, baselineMin:150, history:[120, 155, 185, 140] }
 };
-const HISTORY = [ {day:"Mon",min:175}, {day:"Tue",min:210}, {day:"Wed",min:255}, {day:"Thu",min:190} ];
-// Fri = today, from the live session
+const HISTORY_DAYS = ["Mon", "Tue", "Wed", "Thu"];      // Fri = today, from the live session
 
 // ---- Load model tuning (minutes are SIMULATED minutes unless noted) ----
 const TICK_MS = 100;                  // real-time tick
@@ -97,18 +96,18 @@ const DAY_NAMES = { Mon:"Monday", Tue:"Tuesday", Wed:"Wednesday", Thu:"Thursday"
 const RING_LEN = 2 * Math.PI * 54;           // circumference of the load ring
 
 // Tips: some wording depends on the role (key "all" = same for everyone)
-const TIP_ICONS = { pause:"s-pause", water:"s-glass", mic:"s-wave", silent:"s-book" };
+const TIP_ICONS = { pause:"i-pause", water:"i-drop", mic:"i-mic", silent:"i-book" };
 const TIP_TEXT = {
   pause:  { teacher:"Pause 2 min between lessons. Let your vocal folds rest.",
             lecturer:"Pause 2 min between sessions. Let your voice rest.",
-            callcentre:"Take a sip and a quiet breath between calls. Let your voice rest." },
+            presenter:"Pause 2 min between sessions. Let your voice rest." },
   water:  { all:"Sip water every 30 min. Hydrated folds vibrate more easily." },
   mic:    { teacher:"Use a mic or a gesture for attention instead of raising your voice.",
             lecturer:"Use the mic and let slides do the pointing instead of raising your voice.",
-            callcentre:"Keep your headset volume low so you don't talk louder than needed." },
+            presenter:"Use a clip-on mic and let slides or polls do the work instead of raising your voice." },
   silent: { teacher:"Switch to a silent task: reading, written exercise or group work.",
             lecturer:"Switch to a silent task: a short quiz or a discussion in pairs.",
-            callcentre:"Switch to a silent task: written follow-ups, chat or admin work." }
+            presenter:"Switch to a silent task: a group exercise or Q&A on cards." }
 };
 const TIPS_BY_LEVEL = { calm:["pause","water","mic"], warning:["mic","pause","water"], rest:["silent","mic","water"] };
 const STATE_TEXT  = { calm:"Healthy range", warning:"Early warning", rest:"Rest now" };
@@ -117,7 +116,7 @@ const WATCH_TEXT  = { calm:"All good", warning:"Voice rest soon", rest:"2-min vo
 // ---- Guided demo ----
 const COACH_TEXT = [
   "",
-  "Tap the blue “Simulate my workday” button to speed through a teaching day.",
+  "Tap the blue “Simulate my workday” button to speed through a day of speaking.",
   "Watch your voice load rise. At 80% you get a silent reminder.",
   "That was the silent reminder. Now tap “Take break”.",
   "Break done. See how your week compares to your baseline.",
@@ -278,24 +277,22 @@ function renderWater() {
 
 function renderBaseline() {
   $("calBadge").hidden = !baseline;
-  $("baselineText").textContent = t(baseline
-    ? "Saved on this device. In mic mode, speaking much louder than your normal level adds extra load. Volume only, nothing recorded."
-    : "Not set yet. A 10-second check lets TalkLight learn your normal speaking volume. It reads volume only and records nothing.");
-  $("baselineBtn").textContent = t(baseline ? "Redo voice check" : "Run voice check");
+  $("baselineText").textContent = t(baseline ? "Saved on this device. Tap to redo it." : "Not set yet. 10 seconds, volume only.");
 }
 
 function renderRole() {
   const p = PROFILES[state.role];
   document.querySelectorAll(".chip[data-role]").forEach((c) => c.setAttribute("aria-pressed", String(c.dataset.role === state.role)));
   $("avatarUse").setAttribute("href", "#av-" + state.role);
+  $("avatarWrap").dataset.ill = "role-" + state.role;
+  applyIll($("avatarWrap"));
   $("avatarTitle").textContent = t(p.label);
   $("whoName").textContent = t(p.label);
   $("roleLine").textContent = t("Limit {limit} · baseline {base}", { limit:fmtDur(p.limitMin), base:fmtDur(p.baselineMin) });
 }
 
-// One source of truth: loadPct drives ring, number, Limit bar, tips and watch.
+// One source of truth: loadPct drives ring, number, tips and watch.
 function render() {
-  const profile = PROFILES[state.role];
   const pct = Math.floor(state.loadPct);         // floor: "80%" only shows once the state is really warning
   const level = levelFor(state.loadPct);
   state.alertLevel = level;
@@ -314,10 +311,6 @@ function render() {
   const arc = $("ringArc");
   arc.style.strokeDashoffset = RING_LEN * (1 - Math.min(state.loadPct, 100) / 100);
   arc.style.opacity = pct < 1 ? 0 : 1;           // no stray round cap at 0%
-  $("limitPct").textContent = pct + "%";
-  $("meterFill").style.width = (Math.min(state.loadPct, SCALE_MAX) / SCALE_MAX * 100) + "%";
-  $("meter").setAttribute("aria-valuenow", pct);
-  $("limitLine").textContent = t("Speaking time {a} · Baseline {b}", { a:fmtDur(state.speakingMin), b:fmtDur(profile.baselineMin) });
   $("kBreaks").textContent = state.breaksTaken;
   $("kWater").textContent = state.water + "/" + WATER_GOAL;
   $("restBtn").disabled = breakLeftSec > 0;
@@ -422,7 +415,7 @@ function renderWatch() {
 }
 
 // Take break: guided countdown. Load falls smoothly by 35% of the limit, speaking is paused.
-// The demo break is 10 s (stands in for 2 minutes); the guided rest on the Limit tab is the real 2 minutes.
+// The demo break is 10 s (stands in for 2 minutes); the guided rest on Live is the real 2 minutes.
 function startBreak(total) {
   if (breakLeftSec > 0) return;
   clearPreview();
@@ -751,7 +744,7 @@ function finishVoiceCheck(run) {
 function renderChart() {
   lastChartAt = performance.now();
   const profile = PROFILES[state.role];
-  const days = HISTORY.concat({ day:"Fri", min:Math.round(state.speakingMin), today:true });
+  const days = profile.history.map((min, i) => ({ day:HISTORY_DAYS[i], min })).concat({ day:"Fri", min:Math.round(state.speakingMin), today:true });
   const peak = Math.max(profile.baselineMin, ...days.map((d) => d.min));
   const step = Math.max(60, Math.ceil(peak / 3 / 60) * 60);    // 3 gridlines on whole hours
   const top = step * 3;
@@ -797,17 +790,64 @@ function renderInsight(days, baselineMin) {
 }
 
 /* ================= GUIDED DEMO ================= */
+// A bubble anchored to the control the visitor should use next. If that control is on another tab,
+// it points at the tab button instead.
 function coachGo(n) { if (n > coachStep) { coachStep = n; renderCoach(); } }
+function tabButton(name) { return document.querySelector('.tab[data-tab="' + name + '"]'); }
+function coachTarget() {
+  const onTab = (tab, el) => (currentTab === tab ? el : tabButton(tab));
+  switch (coachStep) {
+    case 1: return onTab("live", $("startBtn"));
+    case 2: return onTab("live", document.querySelector("#screen-live .ring"));
+    case 3: return onTab("alerts", $("breakBtn"));
+    case 4: return tabButton("week");
+    default: return onTab("week", $("summaryBtn"));
+  }
+}
+let coachKey = "", coachRaf = 0, coachPulseEl = null;
+function setCoachPulse(el) {
+  if (coachPulseEl === el) return;
+  if (coachPulseEl) coachPulseEl.classList.remove("coach-pulse");
+  coachPulseEl = el;
+  if (el) el.classList.add("coach-pulse");
+}
 function renderCoach() {
-  $("startBtn").classList.toggle("cta-hint", coachStep === 1 && !coachHidden && !introOpen && !state.running && state.dayMin === 0);
+  const tip = $("coach");
   const show = !coachHidden && !introOpen;
-  $("coach").hidden = !show;
-  if (!show) return;
+  tip.hidden = !show;
+  if (!show) { coachKey = ""; setCoachPulse(null); return; }
+  const toLive = coachStep === 1 && currentTab !== "live";
+  const key = [coachStep, currentTab, LANG, toLive].join("|");
+  if (key === coachKey) return;                  // render() runs every 100 ms: only touch the DOM when something changed
+  coachKey = key;
   $("coachStep").textContent = coachStep >= 5 ? t("Done") : coachStep + "/4";
   $("coachText").textContent = t(COACH_TEXT[coachStep]);
-  const toLive = coachStep === 1 && currentTab !== "live";
   $("coachAct").hidden = !(coachStep >= 5 || toLive);
   $("coachAct").textContent = t(toLive ? "Go to Live" : "Summary");
+  const el = coachTarget();
+  setCoachPulse(el && el.tagName === "BUTTON" ? el : null);
+  if (el && !el.classList.contains("tab")) el.scrollIntoView({ block:"nearest" });
+  scheduleCoachPosition();
+}
+function scheduleCoachPosition() { if (!coachRaf) coachRaf = requestAnimationFrame(positionCoach); }
+function positionCoach() {
+  coachRaf = 0;
+  const tip = $("coach");
+  const el = coachTarget();
+  if (tip.hidden || !el) return;
+  const GAP = 12;
+  const app = $("app").getBoundingClientRect(), r = el.getBoundingClientRect(), tr = tip.getBoundingClientRect();
+  const isTab = el.classList.contains("tab");
+  const topLimit = $("topbar").getBoundingClientRect().bottom - app.top + 8;
+  const bottomLimit = isTab ? app.height : $("tabbar").getBoundingClientRect().top - app.top - 8;
+  const below = r.bottom - app.top + GAP, above = r.top - app.top - GAP - tr.height;
+  const fitsBelow = below + tr.height <= bottomLimit, fitsAbove = above >= topLimit;
+  const pos = coachStep === 2 ? (fitsAbove || !fitsBelow ? "above" : "below") : (fitsBelow || !fitsAbove ? "below" : "above");
+  tip.dataset.pos = pos;
+  tip.style.visibility = isTab || (r.bottom > topLimit && r.top < bottomLimit) ? "" : "hidden";   // target scrolled out of view
+  tip.style.top = (pos === "below" ? Math.min(below, bottomLimit - tr.height) : Math.max(above, topLimit)) + "px";
+  const cx = r.left + r.width / 2 - tr.left;
+  $("coachArrow").style.left = Math.max(22, Math.min(tr.width - 22, cx)) + "px";
 }
 
 /* ================= ROUTER ================= */
@@ -819,6 +859,7 @@ function showTab(name) {
     else t.removeAttribute("aria-current");
   });
   $("main").scrollTop = 0;
+  coachKey = "";
   if (name === "week") { renderChart(); if (coachStep >= 4) coachGo(5); }
   if (name === "plan") renderPlan();
   renderCoach();
@@ -864,6 +905,7 @@ function openSummary() {
   updateMailLinks();
   $("shareBtn").hidden = !(navigator.share || (navigator.clipboard && navigator.clipboard.writeText));
   openSheet("sheet-end");
+  playDone();
 }
 
 /* ================= CONTACT (mailto only: nothing is sent from the page) ================= */
@@ -1019,6 +1061,10 @@ $("resetData").addEventListener("click", () => {
   announce(t("Your settings on this device were deleted."));
 });
 $("baselineBtn").addEventListener("click", () => openIntro(true));
+$("dayPlanBtn").addEventListener("click", () => showTab("plan"));
+$("dayAddBtn").addEventListener("click", () => showTab("plan"));
+$("main").addEventListener("scroll", scheduleCoachPosition, { passive:true });
+window.addEventListener("resize", scheduleCoachPosition);
 $("summaryBtn").addEventListener("click", openSummary);
 $("coachX").addEventListener("click", () => { coachHidden = true; renderCoach(); });
 $("coachAct").addEventListener("click", () => (coachStep >= 5 ? openSummary() : showTab("live")));

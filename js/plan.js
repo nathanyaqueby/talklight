@@ -29,8 +29,8 @@ function sampleEvents(role) {
   const add = (title, h, m, len) => out.push({ title, start: h * 60 + m, end: h * 60 + m + len });
   if (role === "lecturer") {
     add("Lecture", 9, 0, 90); add("Seminar", 10, 45, 45); add("Workshop", 13, 0, 90); add("Office hours", 15, 0, 30);
-  } else if (role === "callcentre") {
-    add("Call block", 8, 0, 105); add("Call block", 10, 0, 105); add("Call block", 12, 30, 105); add("Team meeting", 14, 30, 30);
+  } else if (role === "presenter") {
+    add("Workshop", 9, 0, 90); add("Keynote", 11, 0, 45); add("Training session", 13, 0, 90); add("Q&A panel", 15, 0, 45);
   } else {
     add("Lesson 1", 8, 0, 45); add("Lesson 2", 8, 55, 45);
     add("Lesson 3", 10, 0, 45); add("Lesson 4", 10, 55, 45); add("Parents' evening", 17, 0, 60);
@@ -75,12 +75,39 @@ function renderPlan() {
   $("eventEmpty").hidden = events.length > 0;
   $("clearDayBtn").disabled = !events.length;
   $("exportBtn").hidden = planWindows().length === 0;
+  renderLiveDay();
   renderCalSource();
   const ins = $("planInsights");
   ins.textContent = "";
   planInsights().forEach((s) => { const li = document.createElement("li"); li.textContent = s; ins.append(li); });
   $("autoQuietToggle").setAttribute("aria-checked", String(settings.autoQuiet));
   renderNow();
+}
+
+// Read-only timeline on the Live screen: what is left of today, with break windows in between
+function renderLiveDay() {
+  const n = nowMin(), all = sortedEvents();
+  const left = all.filter((e) => e.end > n);
+  const list = left.length ? left : all;          // the day is over: show it dimmed instead of an empty card
+  const rows = [];
+  list.forEach((ev, i) => {
+    if (i > 0 && ev.start - list[i - 1].end >= GAP_MIN) rows.push({ gap: true, start: list[i - 1].end, end: ev.start });
+    rows.push(ev);
+  });
+  const ul = $("liveEvents");
+  ul.textContent = "";
+  rows.slice(0, 5).forEach((r) => {
+    const li = document.createElement("li");
+    li.className = "event" + (r.gap ? " gap" : "") + (!r.gap && n >= r.start && n < r.end ? " now" : "") + (!r.gap && r.end <= n ? " past" : "");
+    const time = document.createElement("span"); time.className = "ev-time"; time.textContent = hm(r.start) + "–" + hm(r.end);
+    const title = document.createElement("span"); title.className = "ev-title"; title.textContent = r.gap ? t("Break window") : evTitle(r.title);
+    li.append(time, title);
+    if (r.gap) { li.insertAdjacentHTML("beforeend", '<svg class="ev-ic" aria-hidden="true"><use href="#i-drop"/></svg>'); }
+    ul.append(li);
+  });
+  $("liveEmpty").hidden = all.length > 0;
+  $("dayAddBtn").hidden = all.length > 0;
+  $("dayPlanBtn").hidden = all.length === 0;
 }
 
 function renderNow() {
@@ -104,6 +131,7 @@ function updateCalQuiet() {
   if (was && !q) checkAlerts();                  // a held reminder fires now
   renderQuiet();
   if (currentTab === "plan") renderNow();
+  renderLiveDay();
   render();
 }
 
@@ -168,13 +196,13 @@ function mockDay(kind) {
   const e = (title, h1, m1, h2, m2) => ({ title, start: h1 * 60 + m1, end: h2 * 60 + m2 });
   if (kind === "classes") {
     return [e("Entrepreneurship lecture", 9, 0, 10, 30), e("Business Model Canvas workshop", 10, 45, 12, 15),
-            e("Pitch practice", 13, 30, 14, 15), e("Team meeting: TalkLight", 14, 30, 15, 30), e("Mentor call", 16, 0, 16, 30)];
+            e("Pitch practice", 13, 30, 14, 15), e("Team meeting: TalkLight", 14, 30, 15, 30), e("Mentor meeting", 16, 0, 16, 30)];
   }
   if (kind === "google") {
     return [e("Team stand-up", 8, 30, 9, 0), e("Client workshop", 9, 15, 11, 0), e("Project review", 11, 15, 12, 0), e("Interview", 13, 0, 14, 0), e("Planning", 14, 15, 15, 15)];
   }
   if (kind === "outlook") {
-    return [e("Weekly sync", 9, 0, 10, 0), e("Customer calls", 10, 15, 12, 0), e("Training session", 13, 0, 14, 30), e("1:1", 15, 0, 15, 30)];
+    return [e("Weekly sync", 9, 0, 10, 0), e("Product demo", 10, 15, 12, 0), e("Training session", 13, 0, 14, 30), e("1:1", 15, 0, 15, 30)];
   }
   return [e("Seminar", 8, 30, 10, 0), e("Office hours", 10, 15, 11, 0), e("Lecture", 11, 15, 12, 45), e("Department meeting", 14, 0, 15, 0)];
 }

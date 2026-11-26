@@ -2,7 +2,7 @@
 
 **Pause your voice, not your ideas.**
 
-TalkLight is a voice wellbeing companion for people who talk for a living (teachers, lecturers, call-centre agents).
+TalkLight is a voice wellbeing companion for people who talk for a living (teachers, university lecturers, trainers and presenters).
 This repository is the **clickable web prototype**: visitors scan the poster QR code and try a guided 60-second demo on their own phone.
 
 It tracks speaking **time and loudness only, never words**, estimates a "voice load" against a personal limit, and gives a silent reminder (screen glow, vibration, optional watch notification) before the voice gets tired.
@@ -12,16 +12,16 @@ A student project of the Entrepreneurship course at Carinthia University of Appl
 ## The demo flow
 
 1. **Intro** (first visit): Monitor → Nudge → Rest, then pick a role and optionally run a 10-second *voice check*.
-2. **Live**: tap *Simulate my workday*. A coach bar guides 4 steps: start → water nudge at 45% → silent reminder at 80% → *Take break* (guided breathing screen) → *Week* → summary.
+2. **Live**: tap *Simulate my workday*. A coach bubble anchored to the next control guides 4 steps: start → water nudge at 45% → silent reminder at 80% → *Take break* (guided breathing screen) → *Week* → summary.
 3. **Summary**: peak load, breaks, water, "Would you use TalkLight?" and a **Contact us** button (opens a pre-filled GitHub issue, or an email if `CONTACT_EMAIL` is set; nothing is sent from the page).
 
-Other screens: **Limit** (load meter, water tracker, guided 2-minute voice rest, voice baseline, tips) · **Alerts** (watch preview, snooze, Lecture mode, watch notifications, Band teaser) · **Plan** (personal day, smart break windows, auto Lecture mode) · **Week** (trend vs baseline, schools & employers card, sample team view) · **Settings** (vibration, water nudges, language, About & team, privacy).
+Live also holds today's timeline (from Plan), the water tracker, the guided 2-minute voice rest, tips and the mic switch. Other screens: **Alerts** (watch preview, snooze, Lecture mode, watch notifications, Band teaser) · **Plan** (personal day, smart break windows, auto Lecture mode) · **Week** (trend vs baseline, schools & employers card, sample team view) · **Settings** (vibration, water nudges, voice check, language, About & team, privacy).
 Language: English and German (auto-detected, switch with the flag buttons).
 On desktop the app is shown in a phone frame next to a "scan to open on your phone" QR code generated from the current page URL.
 
 ### What the role changes
 
-Teacher, Lecturer and Call-centre differ in: personal limit and typical baseline (shown under the role chips), the week chart, the sample day in *Plan*, the avatar, and the wording of the tips. The **demo speed is deliberately identical** for all roles (80% after about 12 s) so every run behaves the same on stage.
+Teacher, University lecturer and Trainer & presenter differ in: personal limit and typical baseline (shown under the role chips), the week chart, the sample day in *Plan*, the avatar, and the wording of the tips. The **demo speed is deliberately identical** for all roles (80% after about 12 s) so every run behaves the same on stage.
 
 ## Files
 
@@ -77,21 +77,21 @@ Gradient `#0F64B7 → #64AAF2`, ink `#0B1B2B`, white and cool greys. Open Sauce 
 
 ## Rules to keep (design constraints)
 
-1. Static files only. No framework, no build step. The page makes no external requests.
+1. Static files only. No framework, no build step. The page makes no external requests. Icons are Lucide, copied into index.html as SVG symbols.
 2. Nothing leaves the device. No backend, no login, no analytics. Only role, language, baseline level, switches and calendar entries are kept in `localStorage` (wrapped in try/catch) and can be deleted in Settings. "Contact us" is a plain link (GitHub issue or `mailto:`).
 3. Never record audio. The mic code only reads a volume number (RMS) from an `AnalyserNode`.
 4. No medical claims: say "voice wellbeing", "voice load", "voice strain", never "diagnose", "treat" or "cure".
 5. The simulated workday is deterministic: no `Math.random()`, so every run behaves the same on stage.
 6. Mobile-first, 360–430 px wide; tap targets ≥ 44 px; no horizontal scroll at 375 px.
-7. Real-world figures are limited to "3–5 hrs/day typical speaking" and "Teachers: 41–58% report voice strain" (always labelled as a population figure). Everything else on screen is demo or sample data and must be labelled as such (e.g. the team view).
+7. Real-world figures are limited to "3–5 hrs/day typical speaking" and "41% of university teachers have a voice disorder (Azari et al., 2022)" (always labelled as a population figure). Everything else on screen is demo or sample data and must be labelled as such (e.g. the team view).
 8. New user-visible text: write English in the HTML or in `t("…")`, then add the German to `DE` in `js/i18n.js`.
 
 ## How the model works
 
-- `state.loadPct` is the single source of truth for the ring, the Limit bar, tips, watch face and colours.
+- `state.loadPct` is the single source of truth for the ring, tips, watch face and colours.
 - All tuning constants are at the top of `js/app.js`. Every role reaches 80% at about 12 s and 100% at about 18 s after pressing Start. Re-check those timings if you change `DEMO_SECONDS_TO_LIMIT`, `SPEECH_PATTERN`, `STRETCH_*` or `PAUSE_RECOVERY`.
 - Alerts fire once per upward crossing of 80% / 100% and re-arm 10 points below. They switch to the Alerts tab, show a screen glow, vibrate (Android, if enabled), announce via `aria-live`, and optionally send a phone notification. *Lecture mode* (manual, or automatic while a Plan event runs) and *Snooze* hold an alert; it fires when they end if the load is still above the line.
-- A voice break lowers the load by `BREAK_DROP` of the limit. The demo break lasts 10 s (stands for 2 minutes), the guided rest on the Limit tab is the real 120 s.
+- A voice break lowers the load by `BREAK_DROP` of the limit. The demo break lasts 10 s (stands for 2 minutes), the guided rest on Live is the real 120 s.
 - **Mic mode** reads only a live volume level. If a voice check was done, speaking louder than `LOUD_FACTOR` × your baseline adds extra load (`LOUD_MULT`).
 
 ## Platform notes
@@ -102,7 +102,7 @@ Gradient `#0F64B7 → #64AAF2`, ink `#0B1B2B`, white and cool greys. Open Sauce 
 ## Quick test checklist
 
 - Fresh visit shows the intro; Skip and Start my demo both land on Live; the second visit skips the intro.
-- Simulate: toast at ~7 s, amber + auto-switch to Alerts at ~12 s, coral at ~18 s; coach advances 1/4 → 4/4 → Done.
+- Simulate: toast at ~7 s, amber + auto-switch to Alerts at ~12 s, coral at ~18 s; coach bubble advances 1/4 → 4/4 → Done.
 - Take break opens the breathing screen, load falls by 35 points over 10 s, a toast confirms; Week → Summary shows the stats.
 - Plan: *Use a sample day*, then *a meeting starts now* → Lecture mode switches on by itself; the 80% alert is held ("Held" tag) and fires when the meeting ends or auto mode is switched off.
 - Flag buttons switch every screen; reload keeps the choice.

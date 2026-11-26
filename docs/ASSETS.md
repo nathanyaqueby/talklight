@@ -7,10 +7,12 @@ All optional. Drop files at the exact paths below and reload. **SVG is always be
 | File | Status |
 |---|---|
 | `img/logo.svg`, `img/logo-white.svg` | Team-provided logos. |
-| `img/cuas-logo.jpg` | CUAS logo (JPG, white background, shown on a light card on the About page). |
+| `img/cuas-logo.png` | CUAS logo (PNG, transparent background, About page). |
 | `img/icon*.png`, `img/icon.svg`, `favicon-32.png` | Generated app icons: gradient tile with a white cup. Replace with the official cup if you have a clean vector (see below). |
 | `img/og-image.png` | Link preview, built from `tools/og.html`. |
-| Intro illustrations, role avatars, watch | Drawn in code inside `index.html`. |
+| Intro illustrations, role avatars, watch | Drawn in code inside `index.html` (fallbacks for the artwork slots). |
+| UI icons | Lucide (ISC), inlined in `index.html`. |
+| `img/lottie/*.json` | Two generated animations, see ILLUSTRATIONS.md. |
 
 ## Wanted: team photos (only if each person agrees to publish)
 
@@ -21,18 +23,9 @@ Square JPG, 400×400 px, face centred, under 60 KB each. Shown as 48 px circles.
 
 `img/cal/google.webp`, `outlook.webp`, `apple.svg`, `cu_logo.svg` are shown in Plan > Connect a calendar. Square or near-square, transparent background works best; WebP is fine (all current browsers).
 
-## Wanted: illustrations that would lift the look most
+## Illustrations and animations
 
-Style: flat vector, rounded shapes, no outlines, in the palette below, same family as the poster's role icons (people with a soft pastel background circle). Transparent background.
-
-| # | Illustration | Where it goes | Spec |
-|---|---|---|---|
-| 1 | Three intro scenes: **Monitor** (person speaking, soundwave), **Nudge** (wrist/phone with a soft glow), **Rest** (person with water glass / cup) | Intro slides 1–3 (`img/intro-1.svg`, `intro-2.svg`, `intro-3.svg`) | SVG, square 600×600 viewBox, fits inside a circle of 80% width. |
-| 2 | Three role portraits: teacher, lecturer, call-centre agent | Role avatar on Live, role cards in setup (`img/role-teacher.svg`, `role-lecturer.svg`, `role-callcentre.svg`) | SVG, 240×240, head and shoulders, centred, works inside a circle. The poster icons would be perfect. |
-| 3 | **Empty state**: empty calendar | Plan tab when there are no events (`img/empty-plan.svg`) | SVG, 320×200, light and friendly. |
-| 5 | **Celebration / done** graphic | Summary sheet after the demo (`img/done.svg`) | SVG, 400×240, e.g. cup with sparkles. |
-
-If a file is missing the app keeps using the code-drawn version, so you can add them one at a time and tell the developer, who then wires them up.
+See **[ILLUSTRATIONS.md](ILLUSTRATIONS.md)** for the full brief (file names, sizes, colours, SVG and Lottie rules). In short: 3 intro scenes, 3 role portraits and 1 empty-state graphic as SVG in `img/illustrations/`, plus optional Lottie replacements in `img/lottie/`. Missing files fall back to the built-in drawings.
 
 ## Palette for everything
 

@@ -29,52 +29,52 @@
 </head>
 <body>
 
-<!-- ================= SVG SYMBOLS ================= -->
+<!-- ================= SVG SYMBOLS =================
+     i-*  UI icons from Lucide (ISC licence, see THIRD_PARTY_NOTICES.md); they inherit the text colour.
+     s-*  small illustrations used on the intro; av-*  role avatars; f-*  flags. -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
   <defs>
-    <!-- One gradient per state (CSS variables don't reach into <linearGradient>, so each is explicit) -->
+    <!-- One gradient per state (CSS variables do not reach into <linearGradient>, so each is explicit) -->
     <linearGradient id="g-calm" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#0F64B7"/><stop offset="1" stop-color="#64AAF2"/></linearGradient>
     <linearGradient id="g-warning" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#F29900"/><stop offset="1" stop-color="#FFC94D"/></linearGradient>
     <linearGradient id="g-rest" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#D7373F"/><stop offset="1" stop-color="#FF7A6B"/></linearGradient>
     <linearGradient id="brandG" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#0F64B7"/><stop offset="1" stop-color="#64AAF2"/></linearGradient>
   </defs>
-  <symbol id="s-shield" viewBox="0 0 24 24">
-    <path d="M12 2l8 3v6c0 5-3.5 9-8 11-4.5-2-8-6-8-11V5z" fill="url(#brandG)"/>
-    <rect x="8.5" y="11" width="7" height="5.5" rx="1.2" fill="#FFFFFF"/>
-    <path d="M10 11V9.5a2 2 0 0 1 4 0V11" fill="none" stroke="#FFFFFF" stroke-width="1.6"/>
-  </symbol>
-  <symbol id="s-shield-w" viewBox="0 0 24 24">
-    <path d="M12 2l8 3v6c0 5-3.5 9-8 11-4.5-2-8-6-8-11V5z" fill="#FFFFFF"/>
-    <rect x="8.5" y="11" width="7" height="5.5" rx="1.2" fill="#0F64B7"/>
-    <path d="M10 11V9.5a2 2 0 0 1 4 0V11" fill="none" stroke="#0F64B7" stroke-width="1.6"/>
-  </symbol>
+  <symbol id="i-live" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 10v3" /> <path d="M6 6v11" /> <path d="M10 3v18" /> <path d="M14 8v7" /> <path d="M18 5v13" /> <path d="M22 10v3" /></g></symbol>
+  <symbol id="i-alerts" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.268 21a2 2 0 0 0 3.464 0" /> <path d="M22 8c0-2.3-.8-4.3-2-6" /> <path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326" /> <path d="M4 2C2.8 3.7 2 5.7 2 8" /></g></symbol>
+  <symbol id="i-plan" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v3" /> <path d="M16 2v3" /> <rect x="3" y="3" width="18" height="18" rx="2" /> <path d="M3 9h18" /> <path d="M8 13h.01" /> <path d="M12 13h.01" /> <path d="M16 13h.01" /> <path d="M8 17h.01" /> <path d="M12 17h.01" /> <path d="M16 17h.01" /></g></symbol>
+  <symbol id="i-week" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v16a2 2 0 0 0 2 2h16" /> <path d="m19 9-5 5-4-4-3 3" /></g></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /> <path d="M12 16v-4" /> <path d="M12 8h.01" /></g></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /> <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" /> <path d="M2 12h20" /></g></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7" /> <rect x="2" y="4" width="20" height="16" rx="2" /></g></symbol>
+  <symbol id="i-settings" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915" /> <circle cx="12" cy="12" r="3" /></g></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /> <path d="M12 6v6l4 2" /></g></symbol>
+  <symbol id="i-code" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 16 4-4-4-4" /> <path d="m6 8-4 4 4 4" /> <path d="m14.5 4-5 16" /></g></symbol>
+  <symbol id="i-upload" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12" /> <path d="m17 8-5-5-5 5" /> <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /></g></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3" /> <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /> <path d="m7 10 5 5 5-5" /></g></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5" /></g></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18" /> <path d="m6 6 12 12" /></g></symbol>
+  <symbol id="i-mic" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19v3" /> <path d="M19 10v2a7 7 0 0 1-14 0v-2" /> <rect x="9" y="2" width="6" height="13" rx="3" /></g></symbol>
+  <symbol id="i-drop" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z" /></g></symbol>
+  <symbol id="i-lecture" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h20" /> <path d="M21 3v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V3" /> <path d="m7 21 5-5 5 5" /></g></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" /> <path d="m9 12 2 2 4-4" /></g></symbol>
+  <symbol id="i-pause" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="14" y="3" width="5" height="18" rx="1" /> <rect x="5" y="3" width="5" height="18" rx="1" /></g></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v16" /> <path d="M20.001 19A2 2 0 0022 17V5a2 2 0 00-1.999-2L16 3.002A5 5 0 0012 5a5 5 0 00-4-2H4a2 2 0 00-2 2v12a2 2 0 001.999 2H8a5 5 0 014 2 5 5 0 014-2z" /></g></symbol>
+  <symbol id="i-chevron" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6" /></g></symbol>
+  <symbol id="i-replay" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" /> <path d="M3 3v5h5" /></g></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 11v6" /> <path d="M14 11v6" /> <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" /> <path d="M3 6h18" /> <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" /></g></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14" /> <path d="M12 5v14" /></g></symbol>
   <symbol id="s-glass" viewBox="0 0 48 48">
     <path d="M11 6h26l-3.5 36h-19z" fill="#FFFFFF" stroke="#0B1B2B" stroke-width="2.4" stroke-linejoin="round"/>
     <path d="M13.2 19h21.6l-2.3 22h-17z" fill="#64AAF2"/>
     <circle cx="20" cy="28" r="2" fill="#FFFFFF"/><circle cx="27" cy="34" r="1.6" fill="#FFFFFF"/>
-  </symbol>
-  <symbol id="s-pause" viewBox="0 0 48 48">
-    <rect x="13" y="11" width="8" height="26" rx="4" fill="url(#brandG)"/>
-    <rect x="27" y="11" width="8" height="26" rx="4" fill="url(#brandG)"/>
-  </symbol>
-  <symbol id="s-book" viewBox="0 0 48 48">
-    <path d="M24 14c-5-3-12-3-16-1v23c4-2 11-2 16 1z" fill="#FFFFFF" stroke="#0B1B2B" stroke-width="2.4" stroke-linejoin="round"/>
-    <path d="M24 14c5-3 12-3 16-1v23c-4-2-11-2-16 1z" fill="#CFE4FA" stroke="#0B1B2B" stroke-width="2.4" stroke-linejoin="round"/>
-  </symbol>
-  <symbol id="s-wave" viewBox="0 0 70 40">
-    <g fill="url(#brandG)">
-      <rect x="3" y="14" width="6" height="12" rx="3"/><rect x="13" y="9" width="6" height="22" rx="3"/>
-      <rect x="23" y="4" width="6" height="32" rx="3"/><rect x="33" y="1" width="6" height="38" rx="3"/>
-      <rect x="43" y="4" width="6" height="32" rx="3"/><rect x="53" y="9" width="6" height="22" rx="3"/>
-      <rect x="63" y="14" width="6" height="12" rx="3"/>
-    </g>
   </symbol>
   <symbol id="s-watch" viewBox="0 0 200 200">
     <rect x="70" y="12" width="60" height="44" rx="10" fill="#0B1B2B"/>
     <rect x="70" y="144" width="60" height="44" rx="10" fill="#0B1B2B"/>
     <rect x="50" y="42" width="100" height="116" rx="30" fill="#0B1B2B"/>
   </symbol>
-  <!-- Role avatars -->
+  <!-- Role avatars (built-in fallbacks; real artwork can replace them, see docs/ILLUSTRATIONS.md) -->
   <symbol id="av-teacher" viewBox="0 0 120 120">
     <circle cx="60" cy="60" r="56" fill="#E8F2FC"/>
     <path d="M25.4 104C28 86 42 78 60 78s32 8 34.6 26A56 56 0 0 1 25.4 104z" fill="#0F64B7" stroke="#0B1B2B" stroke-width="2"/>
@@ -97,41 +97,20 @@
     <circle cx="54" cy="59" r="4.5" fill="none" stroke="#0B1B2B" stroke-width="2"/><circle cx="66" cy="59" r="4.5" fill="none" stroke="#0B1B2B" stroke-width="2"/>
     <path d="M58.5 59h3M56 67q4 3 8 0" fill="none" stroke="#0B1B2B" stroke-width="2" stroke-linecap="round"/>
   </symbol>
-  <symbol id="av-callcentre" viewBox="0 0 120 120">
+  <symbol id="av-presenter" viewBox="0 0 120 120">
     <circle cx="60" cy="60" r="56" fill="#E8F2FC"/>
     <path d="M25.4 104C28 86 42 78 60 78s32 8 34.6 26A56 56 0 0 1 25.4 104z" fill="#64AAF2" stroke="#0B1B2B" stroke-width="2"/>
+    <path d="M51 79l9 20 9-20" fill="none" stroke="#0B1B2B" stroke-width="2.2" stroke-linejoin="round"/>
+    <rect x="54" y="97" width="12" height="10" rx="2" fill="#FFFFFF" stroke="#0B1B2B" stroke-width="2"/>
     <circle cx="60" cy="58" r="17" fill="#FFFFFF" stroke="#0B1B2B" stroke-width="2"/>
-    <circle cx="54" cy="59" r="2" fill="#0B1B2B"/><circle cx="66" cy="59" r="2" fill="#0B1B2B"/>
-    <path d="M56 66q4 3 8 0" fill="none" stroke="#0B1B2B" stroke-width="2" stroke-linecap="round"/>
-    <path d="M42 57a18 18 0 0 1 36 0" fill="none" stroke="#0B1B2B" stroke-width="4" stroke-linecap="round"/>
-    <rect x="36" y="51" width="9" height="15" rx="4" fill="#0F64B7" stroke="#0B1B2B" stroke-width="2"/>
-    <rect x="75" y="51" width="9" height="15" rx="4" fill="#0F64B7" stroke="#0B1B2B" stroke-width="2"/>
-    <path d="M41 66c0 8 5 11 12 11" fill="none" stroke="#0B1B2B" stroke-width="2.5" stroke-linecap="round"/>
-    <circle cx="55" cy="77" r="3" fill="#0B1B2B"/>
+    <path d="M43 56c-1-13 8-21 17-21s18 8 17 21c-4-7-10-9-17-9s-13 2-17 9z" fill="#0B1B2B"/>
+    <circle cx="54" cy="60" r="2" fill="#0B1B2B"/><circle cx="66" cy="60" r="2" fill="#0B1B2B"/>
+    <path d="M55 67q5 4 10 0" fill="none" stroke="#0B1B2B" stroke-width="2" stroke-linecap="round"/>
+    <rect x="86" y="62" width="7" height="20" rx="3.5" fill="#0B1B2B" transform="rotate(18 89 72)"/>
+    <circle cx="85" cy="58" r="7" fill="#0F64B7" stroke="#0B1B2B" stroke-width="2"/>
   </symbol>
-  <!-- UI icons (inherit colour) -->
-  <symbol id="i-live" viewBox="0 0 24 24"><path d="M4 10v4M8 7v10M12 4v16M16 7v10M20 10v4" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></symbol>
-  <symbol id="i-limit" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="8" width="20" height="8" rx="4"/><path d="M6 12h7M17 5v14"/></g></symbol>
-  <symbol id="i-alerts" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 17V11a6 6 0 0 1 12 0v6l1.5 2h-15z"/><path d="M10 21.5h4"/></g></symbol>
-  <symbol id="i-week" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M4 16l5-6 4 3 7-8"/></g></symbol>
-  <symbol id="i-plan" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="15" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/></g></symbol>
-  <symbol id="i-info" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 7.6v.2"/></g></symbol>
-  <symbol id="i-globe" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></g></symbol>
-  <symbol id="i-mail" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M4 7.5l8 6 8-6"/></g></symbol>
-  <symbol id="i-settings" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></g></symbol>
-  <symbol id="i-clock" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></g></symbol>
-  <symbol id="i-pausebars" viewBox="0 0 24 24"><g fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="2"/><rect x="14" y="5" width="4" height="14" rx="2"/></g></symbol>
   <symbol id="f-gb" viewBox="0 0 60 40"><clipPath id="gbc"><rect width="60" height="40" rx="6"/></clipPath><g clip-path="url(#gbc)"><rect width="60" height="40" fill="#012169"/><path d="M0 0l60 40M60 0L0 40" stroke="#fff" stroke-width="8"/><path d="M0 0l60 40M60 0L0 40" stroke="#C8102E" stroke-width="3"/><path d="M30 0v40M0 20h60" stroke="#fff" stroke-width="12"/><path d="M30 0v40M0 20h60" stroke="#C8102E" stroke-width="7"/></g></symbol>
   <symbol id="f-de" viewBox="0 0 60 40"><clipPath id="dec"><rect width="60" height="40" rx="6"/></clipPath><g clip-path="url(#dec)"><rect width="60" height="14" fill="#000"/><rect y="13" width="60" height="14" fill="#DD0000"/><rect y="26" width="60" height="14" fill="#FFCE00"/></g></symbol>
-  <symbol id="i-code" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5M14 4l-4 16"/></g></symbol>
-  <symbol id="i-upload" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M7 9l5-5 5 5M4 15v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></g></symbol>
-  <symbol id="i-download" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v12M7 11l5 5 5-5M4 15v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></g></symbol>
-  <symbol id="i-gear" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M18.7 5.3l-2.1 2.1M7.4 16.6l-2.1 2.1"/></g></symbol>
-  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
-  <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></symbol>
-  <symbol id="i-mic" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0M12 18v3"/></g></symbol>
-  <symbol id="i-drop" viewBox="0 0 24 24"><path d="M12 3C9 7.5 6 10.5 6 14.5a6 6 0 0 0 12 0C18 10.5 15 7.5 12 3z" fill="currentColor"/></symbol>
-  <symbol id="i-moon" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M8 12h8"/></g></symbol>
 </svg>
 
 <div class="stage">
@@ -140,7 +119,7 @@
   <aside class="side" aria-label="About TalkLight">
     <img class="side-logo" src="img/logo.svg" alt="TalkLight" height="56">
     <h2>Pause your voice,<br>not your ideas.</h2>
-    <p>TalkLight is a voice wellbeing companion for teachers, lecturers and call-centre agents. It gives a silent reminder before your voice gets tired.</p>
+    <p>TalkLight is a voice wellbeing companion for teachers, university lecturers, trainers and presenters. It gives a silent reminder before your voice gets tired.</p>
     <div class="side-qr">
       <div id="qr" class="qr" role="img" aria-label="QR code for this page"></div>
       <p><strong>Best on your phone.</strong><br>Scan to open the 60-second demo.</p>
@@ -162,8 +141,9 @@
       <button class="icon-btn" id="settingsBtn" type="button" aria-label="Settings and privacy"><svg aria-hidden="true"><use href="#i-settings"/></svg></button>
     </header>
 
-    <!-- Guided demo -->
-    <div class="coach" id="coach" hidden>
+    <!-- Guided demo: a bubble anchored to the control the visitor should use next (positioned by js/app.js) -->
+    <div class="coach-tip" id="coach" hidden data-pos="below">
+      <i class="coach-arrow" id="coachArrow" aria-hidden="true"></i>
       <span class="coach-step" id="coachStep">1/4</span>
       <p id="coachText"></p>
       <button class="coach-act" id="coachAct" type="button" hidden></button>
@@ -177,22 +157,22 @@
         <div class="seg" role="group" aria-label="Choose your role">
           <button class="chip" type="button" data-role="teacher" aria-pressed="true">Teacher</button>
           <button class="chip" type="button" data-role="lecturer" aria-pressed="false">Lecturer</button>
-          <button class="chip" type="button" data-role="callcentre" aria-pressed="false">Call-centre</button>
+          <button class="chip" type="button" data-role="presenter" aria-pressed="false">Presenter</button>
         </div>
 
         <div class="card stage-card" id="hero">
           <div class="who">
-            <svg class="avatar" viewBox="0 0 120 120" role="img" aria-labelledby="avatarTitle"><title id="avatarTitle">Teacher</title><use id="avatarUse" href="#av-teacher"/></svg>
+            <span class="avatar-wrap" id="avatarWrap" data-ill="role-teacher"><svg class="avatar" viewBox="0 0 120 120" role="img" aria-labelledby="avatarTitle"><title id="avatarTitle">Teacher</title><use id="avatarUse" href="#av-teacher"/></svg></span>
             <div class="who-text">
               <p class="who-name" id="whoName">Teacher</p>
               <p class="role-line" id="roleLine"></p>
             </div>
             <svg class="wave" id="wave" viewBox="0 0 70 40" preserveAspectRatio="xMaxYMid meet" aria-hidden="true">
-            <rect x="3" y="14" width="6" height="12" rx="3"/><rect x="13" y="9" width="6" height="22" rx="3"/>
-            <rect x="23" y="4" width="6" height="32" rx="3"/><rect x="33" y="1" width="6" height="38" rx="3"/>
-            <rect x="43" y="4" width="6" height="32" rx="3"/><rect x="53" y="9" width="6" height="22" rx="3"/>
-            <rect x="63" y="14" width="6" height="12" rx="3"/>
-          </svg>
+              <rect x="3" y="14" width="6" height="12" rx="3"/><rect x="13" y="9" width="6" height="22" rx="3"/>
+              <rect x="23" y="4" width="6" height="32" rx="3"/><rect x="33" y="1" width="6" height="38" rx="3"/>
+              <rect x="43" y="4" width="6" height="32" rx="3"/><rect x="53" y="9" width="6" height="22" rx="3"/>
+              <rect x="63" y="14" width="6" height="12" rx="3"/>
+            </svg>
           </div>
           <div class="ring">
             <svg viewBox="0 0 132 132" aria-hidden="true">
@@ -218,38 +198,17 @@
           </div>
         </div>
 
-        <div class="pills">
-          <span class="pill"><svg aria-hidden="true"><use href="#s-shield"/></svg>No words recorded · On-device</span>
-          <span class="pill">3–5 hrs/day typical speaking</span>
-          <span class="pill">Teachers: 41–58% report voice strain</span>
-        </div>
-        <p class="muted small">Population figures from research, not your personal risk.</p>
-
-        <button class="toggle" id="micToggle" type="button" role="switch" aria-checked="false">
-          <span class="toggle-ic"><svg aria-hidden="true"><use href="#i-mic"/></svg></span>
-          <span class="toggle-text"><span class="toggle-title">Use my voice (on-device)</span><span class="muted">Reads volume only. Never records.</span></span>
-          <span class="switch" aria-hidden="true"></span>
-        </button>
-        <span class="pill mic-pill" id="micPill" hidden><span id="micPillText" role="status"></span><span id="micVoice" aria-hidden="true"></span></span>
-        <p class="note" id="micNote" role="status" hidden></p>
-      </section>
-
-      <!-- LIMIT -->
-      <section id="screen-limit" class="screen" aria-labelledby="t-limit" hidden>
-        <h1 id="t-limit" class="title">Your personal limit</h1>
-        <div class="card">
-          <p class="label">Voice load</p>
-          <p class="big" id="limitPct">0%</p>
-          <div class="meter">
-            <span class="mark-label top" style="left:66.667%">Early warning</span>
-            <div class="track-bar" id="meter" role="progressbar" aria-label="Voice load, percent of your limit" aria-valuemin="0" aria-valuemax="120" aria-valuenow="0">
-              <div class="fill" id="meterFill"></div>
-              <span class="mark" style="left:66.667%"></span>
-              <span class="mark solid" style="left:83.333%"></span>
-            </div>
-            <span class="mark-label bottom" style="left:83.333%">Your limit</span>
+        <div class="card day-card" id="dayCard">
+          <div class="card-head">
+            <h2 class="subtitle">Today</h2>
+            <button class="mini-btn" id="dayPlanBtn" type="button">Edit plan</button>
           </div>
-          <p class="muted" id="limitLine">Speaking time 0h 00m · Baseline 3h 10m</p>
+          <ul class="events" id="liveEvents"></ul>
+          <div class="empty" id="liveEmpty">
+            <div class="empty-art" data-ill="empty-plan"><svg aria-hidden="true"><use href="#i-plan"/></svg></div>
+            <p class="muted">Nothing planned yet. Add your lessons or sessions and TalkLight finds the best moments for a voice break.</p>
+          </div>
+          <button class="btn btn-soft" id="dayAddBtn" type="button">Plan my day</button>
         </div>
 
         <div class="card water">
@@ -266,20 +225,27 @@
             <h2 class="subtitle">Guided voice rest</h2>
           </div>
           <p class="muted">A calm 2-minute break with water, slow breathing and a relaxed jaw.</p>
-          <button class="btn btn-soft" id="restBtn" type="button">Start 2-minute rest</button>
+          <button class="btn btn-soft" id="restBtn" type="button"><i class="cup-ic btn-cup" aria-hidden="true"></i>Start 2-minute rest</button>
         </div>
 
-        <div class="card">
-          <div class="card-head">
-            <h2 class="subtitle">Your voice baseline</h2>
-          </div>
-          <p class="muted" id="baselineText">Not set yet. A 10-second check lets TalkLight learn your normal speaking volume. It reads volume only and records nothing.</p>
-          <button class="btn btn-ghost" id="baselineBtn" type="button">Run voice check</button>
-        </div>
-
-        <h2 class="subtitle">Tips for right now</h2>
+        <h2 class="subtitle section-title">Tips for right now</h2>
         <ul class="tips" id="tips"></ul>
         <p class="muted small">Voice wellbeing tips, not medical advice.</p>
+
+        <button class="toggle" id="micToggle" type="button" role="switch" aria-checked="false">
+          <span class="toggle-ic"><svg aria-hidden="true"><use href="#i-mic"/></svg></span>
+          <span class="toggle-text"><span class="toggle-title">Use my voice (on-device)</span><span class="muted">Reads volume only. Never records.</span></span>
+          <span class="switch" aria-hidden="true"></span>
+        </button>
+        <span class="pill mic-pill" id="micPill" hidden><span id="micPillText" role="status"></span><span id="micVoice" aria-hidden="true"></span></span>
+        <p class="note" id="micNote" role="status" hidden></p>
+
+        <div class="pills">
+          <span class="pill"><svg aria-hidden="true"><use href="#i-shield"/></svg>No words recorded · On-device</span>
+          <span class="pill">3–5 hrs/day typical speaking</span>
+          <span class="pill">41% of university teachers have a voice disorder (Azari et al., 2022)</span>
+        </div>
+        <p class="muted small">Population figures from research, not your personal risk.</p>
       </section>
 
       <!-- ALERTS -->
@@ -310,8 +276,8 @@
         <button class="btn btn-ghost" id="previewBtn" type="button">Preview alert</button>
 
         <button class="toggle" id="quietToggle" type="button" role="switch" aria-checked="false">
-          <span class="toggle-ic"><svg aria-hidden="true"><use href="#i-moon"/></svg></span>
-          <span class="toggle-text"><span class="toggle-title">Lecture mode</span><span class="muted">Holds reminders during lessons, calls or meetings.</span></span>
+          <span class="toggle-ic"><svg aria-hidden="true"><use href="#i-lecture"/></svg></span>
+          <span class="toggle-text"><span class="toggle-title">Lecture mode</span><span class="muted">Holds reminders during lessons, workshops or meetings.</span></span>
           <span class="switch" aria-hidden="true"></span>
         </button>
         <p class="note" id="quietNote" role="status" hidden></p>
@@ -334,7 +300,7 @@
       <!-- PLAN -->
       <section id="screen-plan" class="screen" aria-labelledby="t-plan" hidden>
         <h1 id="t-plan" class="title">Your day</h1>
-        <p class="muted">Add your lessons, meetings or calls. TalkLight finds good moments for a voice break and can hold reminders while you speak.</p>
+        <p class="muted">Add your lessons, sessions or meetings. TalkLight finds good moments for a voice break and can hold reminders while you speak.</p>
         <div class="card now-card" id="nowCard">
           <p class="label">Right now</p>
           <p class="now-text" id="nowText"></p>
@@ -346,7 +312,7 @@
         </div>
         <p class="note" id="calNote" role="status" hidden></p>
         <button class="toggle" id="autoQuietToggle" type="button" role="switch" aria-checked="true">
-          <span class="toggle-ic"><svg aria-hidden="true"><use href="#i-moon"/></svg></span>
+          <span class="toggle-ic"><svg aria-hidden="true"><use href="#i-lecture"/></svg></span>
           <span class="toggle-text"><span class="toggle-title">Auto Lecture mode</span><span class="muted">Holds reminders while an event is running.</span></span>
           <span class="switch" aria-hidden="true"></span>
         </button>
@@ -391,13 +357,12 @@
           <button class="btn btn-onink" id="teamBtn" type="button">See a sample team view</button>
         </div>
         <button class="btn btn-ghost" id="summaryBtn" type="button">See my demo summary</button>
-        <p class="muted small">Teachers: 41–58% report voice strain (population figure, not your personal risk).</p>
+        <p class="muted small">41% of university teachers have a voice disorder (Azari et al., 2022). A population figure, not your personal risk.</p>
       </section>
     </main>
 
     <nav class="tabbar" id="tabbar" aria-label="Main">
       <button class="tab" type="button" data-tab="live" aria-current="page"><span class="ic"><svg aria-hidden="true"><use href="#i-live"/></svg></span>Live</button>
-      <button class="tab" type="button" data-tab="limit"><span class="ic"><svg aria-hidden="true"><use href="#i-limit"/></svg></span>Limit</button>
       <button class="tab" type="button" data-tab="alerts"><span class="ic"><svg aria-hidden="true"><use href="#i-alerts"/></svg></span>Alerts</button>
       <button class="tab" type="button" data-tab="plan"><span class="ic"><svg aria-hidden="true"><use href="#i-plan"/></svg></span>Plan</button>
       <button class="tab" type="button" data-tab="week"><span class="ic"><svg aria-hidden="true"><use href="#i-week"/></svg></span>Week</button>
@@ -414,8 +379,9 @@
     <section class="breakguide" id="breakGuide" role="dialog" aria-modal="true" aria-labelledby="bgTitle" hidden>
       <p class="step-tag" id="bgKicker">Voice break</p>
       <h2 id="bgTitle">Rest your voice</h2>
-      <div class="breath" aria-hidden="true">
+      <div class="breath" id="breath" aria-hidden="true">
         <i class="breath-ring"></i>
+        <div class="lottie-slot" id="breathLottie"></div>
         <div class="breath-core"><span id="bgPhase">Breathe in</span></div>
       </div>
       <p class="bg-step" id="bgStep"></p>
@@ -436,7 +402,7 @@
       </div>
       <div class="slides-clip"><div class="slides" id="slides">
         <div class="slide">
-          <div class="ill"><svg viewBox="0 0 200 200" aria-hidden="true" class="ill-svg">
+          <div class="ill" data-ill="intro-1"><svg viewBox="0 0 200 200" aria-hidden="true" class="ill-svg">
             <g class="float">
               <rect x="60" y="18" width="80" height="164" rx="20" fill="#fff"/>
               <rect x="66" y="28" width="68" height="144" rx="14" fill="#EAF3FD"/>
@@ -455,13 +421,13 @@
           <p>TalkLight quietly tracks how long and how loud you speak, then compares it with your own personal limit.</p>
         </div>
         <div class="slide">
-          <div class="ill"><svg viewBox="0 0 200 200" aria-hidden="true" class="ill-svg"><circle class="ripple r1" cx="100" cy="112" r="70"/><circle class="ripple r2" cx="100" cy="112" r="84"/><g transform="translate(0 12)"><use href="#s-watch"/><rect x="60" y="52" width="80" height="96" rx="22" fill="#FFC24D"/><path d="M90 92v10M100 86v22M110 92v10" stroke="#0B1B2B" stroke-width="4" stroke-linecap="round"/></g><g class="float2"><rect x="6" y="6" width="104" height="38" rx="14" fill="#fff"/><circle cx="28" cy="25" r="11" fill="#EAF3FD"/><path d="M28 18v8l4 3" fill="none" stroke="#0F64B7" stroke-width="2.5" stroke-linecap="round"/><rect x="46" y="16" width="54" height="7" rx="3.5" fill="#0B1B2B" opacity=".75"/><rect x="46" y="28" width="38" height="6" rx="3" fill="#CFE4FA"/></g></svg></div>
+          <div class="ill" data-ill="intro-2"><svg viewBox="0 0 200 200" aria-hidden="true" class="ill-svg"><circle class="ripple r1" cx="100" cy="112" r="70"/><circle class="ripple r2" cx="100" cy="112" r="84"/><g transform="translate(0 12)"><use href="#s-watch"/><rect x="60" y="52" width="80" height="96" rx="22" fill="#FFC24D"/><path d="M90 92v10M100 86v22M110 92v10" stroke="#0B1B2B" stroke-width="4" stroke-linecap="round"/></g><g class="float2"><rect x="6" y="6" width="104" height="38" rx="14" fill="#fff"/><circle cx="28" cy="25" r="11" fill="#EAF3FD"/><path d="M28 18v8l4 3" fill="none" stroke="#0F64B7" stroke-width="2.5" stroke-linecap="round"/><rect x="46" y="16" width="54" height="7" rx="3.5" fill="#0B1B2B" opacity=".75"/><rect x="46" y="28" width="38" height="6" rx="3" fill="#CFE4FA"/></g></svg></div>
           <p class="step-tag">2 · Nudge</p>
           <h2>A silent reminder, before it's too late</h2>
-          <p>A gentle vibration or a soft glow. No sounds, no interruptions during your lesson or call.</p>
+          <p>A gentle vibration or a soft glow. No sounds, no interruptions during your lesson or workshop.</p>
         </div>
         <div class="slide">
-          <div class="ill"><svg viewBox="0 0 200 200" aria-hidden="true" class="ill-svg">
+          <div class="ill" data-ill="intro-3"><svg viewBox="0 0 200 200" aria-hidden="true" class="ill-svg">
             <circle class="breath-a" cx="100" cy="104" r="70" fill="rgba(255,255,255,.14)"/>
             <g transform="translate(36 22)"><image class="float" href="img/cup-white.svg" width="112" height="120"/></g>
             <g transform="translate(134 118)"><g class="float2"><use href="#s-glass" width="48" height="48"/></g></g>
@@ -475,9 +441,9 @@
           <h2>Set up in 10 seconds</h2>
           <p class="setup-label">I am a…</p>
           <div class="role-cards" role="group" aria-label="Choose your role">
-            <button type="button" class="role-card" data-role="teacher" aria-pressed="true"><svg aria-hidden="true"><use href="#av-teacher"/></svg>Teacher</button>
-            <button type="button" class="role-card" data-role="lecturer" aria-pressed="false"><svg aria-hidden="true"><use href="#av-lecturer"/></svg>Lecturer</button>
-            <button type="button" class="role-card" data-role="callcentre" aria-pressed="false"><svg aria-hidden="true"><use href="#av-callcentre"/></svg>Call-centre</button>
+            <button type="button" class="role-card" data-role="teacher" aria-pressed="true"><span class="rc-av" data-ill="role-teacher"><svg aria-hidden="true"><use href="#av-teacher"/></svg></span><span class="rc-name">Teacher</span><span class="rc-sub">School</span></button>
+            <button type="button" class="role-card" data-role="lecturer" aria-pressed="false"><span class="rc-av" data-ill="role-lecturer"><svg aria-hidden="true"><use href="#av-lecturer"/></svg></span><span class="rc-name">Lecturer</span><span class="rc-sub">University</span></button>
+            <button type="button" class="role-card" data-role="presenter" aria-pressed="false"><span class="rc-av" data-ill="role-presenter"><svg aria-hidden="true"><use href="#av-presenter"/></svg></span><span class="rc-name">Presenter</span><span class="rc-sub">Training &amp; talks</span></button>
           </div>
           <div class="vcheck" id="vcheck" data-phase="idle">
             <p class="setup-label">Voice check <span class="opt">optional</span></p>
@@ -485,7 +451,7 @@
             <div class="vc-meter" aria-hidden="true"><i id="vcLevel"></i></div>
             <div class="vc-progress" aria-hidden="true"><i id="vcProg"></i></div>
             <button type="button" class="btn btn-onblue" id="vcBtn">Start 10-second check</button>
-            <p class="vc-privacy"><svg aria-hidden="true"><use href="#s-shield-w"/></svg>Reads volume only. Nothing is recorded or sent.</p>
+            <p class="vc-privacy"><svg aria-hidden="true"><use href="#i-shield"/></svg>Reads volume only. Nothing is recorded or sent.</p>
           </div>
         </div>
       </div></div>
@@ -509,12 +475,13 @@
         <button class="toggle" id="setQuiet" type="button" role="switch" aria-checked="false">
           <span class="toggle-text"><span class="toggle-title">Lecture mode</span><span class="muted">Hold reminders until you switch it off.</span></span><span class="switch" aria-hidden="true"></span>
         </button>
+        <button class="row-link" id="baselineBtn" type="button"><svg aria-hidden="true"><use href="#i-mic"/></svg><span class="rl-text">Voice check<small id="baselineText"></small></span><svg class="chev" aria-hidden="true"><use href="#i-chevron"/></svg></button>
         <a class="row-link" href="https://github.com/nathanyaqueby/talklight" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-code"/></svg>View source on GitHub</a>
-        <button class="row-link" id="openAbout" type="button"><svg aria-hidden="true"><use href="#i-info"/></svg>About TalkLight &amp; team</button>
+        <button class="row-link" id="openAbout" type="button"><svg aria-hidden="true"><use href="#i-info"/></svg>About TalkLight &amp; team<svg class="chev" aria-hidden="true"><use href="#i-chevron"/></svg></button>
         <button class="row-link" id="setLang" type="button"><svg aria-hidden="true"><use href="#i-globe"/></svg><span>Language</span><b class="row-val" id="setLangVal">English</b></button>
-        <button class="row-link" id="openPrivacy" type="button"><svg aria-hidden="true"><use href="#s-shield"/></svg>Privacy &amp; data</button>
-        <button class="row-link" id="replayIntro" type="button"><svg aria-hidden="true"><use href="#i-live"/></svg>Replay the intro</button>
-        <button class="row-link" id="resetData" type="button"><svg aria-hidden="true"><use href="#i-close"/></svg>Forget my settings on this device</button>
+        <button class="row-link" id="openPrivacy" type="button"><svg aria-hidden="true"><use href="#i-shield"/></svg>Privacy &amp; data<svg class="chev" aria-hidden="true"><use href="#i-chevron"/></svg></button>
+        <button class="row-link" id="replayIntro" type="button"><svg aria-hidden="true"><use href="#i-replay"/></svg>Replay the intro<svg class="chev" aria-hidden="true"><use href="#i-chevron"/></svg></button>
+        <button class="row-link" id="resetData" type="button"><svg aria-hidden="true"><use href="#i-trash"/></svg>Forget my settings on this device</button>
         <p class="muted small">This is a demo with a simulated workday. Wellbeing tips only, not medical advice.</p>
       </div>
     </div>
@@ -534,6 +501,7 @@
       <div class="sheet-bg" data-close></div>
       <div class="sheet-body">
         <div class="sheet-head"><h2 id="en-title">Nice work. That's TalkLight.</h2><button class="icon-btn" type="button" data-close aria-label="Close"><svg aria-hidden="true"><use href="#i-close"/></svg></button></div>
+        <div class="lottie-slot done-art" id="doneArt" aria-hidden="true"></div>
         <div class="stats" id="stats"></div>
         <p class="muted">A real day is longer, but the idea is the same: notice early, rest briefly, keep your voice.</p>
         <p class="label">Would you use TalkLight?</p>
@@ -559,7 +527,7 @@
           <img class="about-logo" src="img/logo.svg" alt="TalkLight">
           <p class="about-tag">Pause your voice, not your ideas.</p>
         </div>
-        <p>TalkLight is a voice wellbeing companion for people who talk for a living: teachers, lecturers and call-centre agents. It tracks speaking time and loudness, never words, and gives a silent reminder before your voice gets tired.</p>
+        <p>TalkLight is a voice wellbeing companion for people who talk for a living: teachers, university lecturers, trainers and presenters. It tracks speaking time and loudness, never words, and gives a silent reminder before your voice gets tired.</p>
         <div class="steps3">
           <div><img src="img/monitor.svg" alt=""><b>Monitor</b><span>Speaking time and loudness</span></div>
           <div><img src="img/nudge.svg" alt=""><b>Nudge</b><span>A silent reminder</span></div>
@@ -603,7 +571,7 @@
       <div class="sheet-bg" data-close></div>
       <div class="sheet-body">
         <div class="sheet-head"><h2 id="ev-title">Add to your day</h2><button class="icon-btn" type="button" data-close aria-label="Close"><svg aria-hidden="true"><use href="#i-close"/></svg></button></div>
-        <label class="field"><span>What is it?</span><input id="evTitle" type="text" maxlength="40" placeholder="Lesson, meeting, calls" autocomplete="off"></label>
+        <label class="field"><span>What is it?</span><input id="evTitle" type="text" maxlength="40" placeholder="Lesson, workshop, meeting" autocomplete="off"></label>
         <div class="row">
           <label class="field"><span>Starts at</span><input id="evStart" type="time" required></label>
           <label class="field"><span>Length</span>
@@ -623,7 +591,7 @@
       <div class="sheet-body">
         <div class="sheet-head"><h2 id="tm-title">Sample team view</h2><button class="icon-btn" type="button" data-close aria-label="Close"><svg aria-hidden="true"><use href="#i-close"/></svg></button></div>
         <span class="tag tag-brand">Illustrative sample data</span>
-        <p class="muted">What a school or call centre could see: anonymous group totals only. Never names, audio or words.</p>
+        <p class="muted">What a school or training team could see: anonymous group totals only. Never names, audio or words.</p>
         <div class="stats">
           <div class="stat"><b>78%</b><span>of staff stayed within their personal limit</span></div>
           <div class="stat"><b>2.4</b><span>voice breaks per person per day</span></div>
